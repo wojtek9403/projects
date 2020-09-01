@@ -1,0 +1,22 @@
+@charset "UTF-8";
+html, body
+	{
+	height: 100%;
+	margin: 0px;
+	background-color: gray;
+}
+
+#container {
+	background-color: gray;
+	height: 100%;
+}
+
+#container2 {
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+
+#disp {
+	margin-top: 10px;
+	margin-bottom: 10px;
+}

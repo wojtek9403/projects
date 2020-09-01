@@ -1,0 +1,224 @@
+@charset "UTF-8";
+html, body {
+	margin: 0px;
+	padding: 0px;
+	height: 100%;
+}
+
+#container {
+	position: relative;
+	padding: 0px;
+	margin: 0 auto;
+	min-width: 800px;
+	min-height: 100%;
+}
+
+#heather1 {
+	position: relative;
+	display: block;
+	background-color: rgb(0, 112, 255);
+	width: 100%;
+	height: 42px;
+}
+
+div.divbutton2 {
+	position: relative;
+	float: right;
+	right: -100px;
+	top: 1px;
+}
+
+a.buttonW {
+	background-color: red;
+	width: 58px;
+	display: block;
+	padding: 10px;
+	text-decoration: none;
+	color: white;
+	border-radius: 8px;
+	transition: 0.25s;
+}
+
+a.buttonW:hover, a.buttonTop:hover {
+	opacity: 0.8;
+	transform: scale(1.1);
+	transition: 0.25s;
+}
+
+div.divMenu {
+	position: relative;
+	float: right;
+	right: 150px;
+	top: 0px;
+	padding: 5px;
+	padding-top: 12px;
+	width: 150px;
+	height: 25px;
+	cursor: pointer;
+	color: white;
+	background-color: transparent;
+}
+
+ul {
+	margin-top: 12px;
+	list-style-type: none;
+}
+
+ul li a {
+	display: none;
+	background-color: gray;
+	text-decoration: none;
+	color: white;
+	padding: 10px;
+	width: 140px;
+	margin-left: -45px;
+	opacity: 0.8;
+	transition: 0.4s;
+}
+
+div.divMenu:hover ul li a {
+	display: block;
+}
+
+div.divMenu:hover {
+	background-color: navy;
+	transition: 0.4s;
+}
+
+div ul li a:hover {
+	opacity: 0.6;
+	background-color: yellow;
+	color: black;
+	transition: 0.4s;
+}
+
+.css-3d-text {
+	position: relative;
+	cursor: default;
+	top: -10px;
+	padding: 0px;
+	height: 20px;
+	margin-top: 0px;
+	float: left;
+	left: 15px;
+	font-size: 30px;
+	color: #ffffff;
+	font-family: "Arial Black", Gadget, sans-serif;
+	text-shadow: 0px 0px 0 rgb(234, 234, 234), 1px 1px 0 rgb(213, 213, 213),
+		2px 2px 0 rgb(192, 192, 192), 3px 3px 0 rgb(171, 171, 171), 4px 4px 0
+		rgb(151, 151, 151), 5px 5px 0 rgb(130, 130, 130), 6px 6px 0
+		rgb(109, 109, 109), 7px 7px 0 rgb(88, 88, 88), 8px 8px 0
+		rgb(67, 67, 67), 9px 9px 0 rgb(46, 46, 46), 10px 10px 0
+		rgb(25, 25, 25), 11px 11px 10px rgba(0, 0, 0, 1), 11px 11px 1px
+		rgba(0, 0, 0, 0.5), 0px 0px 10px rgba(0, 0, 0, .2);
+}
+
+#header2 {
+	height: 200px;
+	background-color: silver;
+}
+
+div.profilowe {
+	position: relative;
+	float: left;
+	left: 30px;
+	top: 25px;
+}
+
+div.details {
+	position: relative;
+	float: left;
+	top: 25px;
+	left: 40px;
+}
+
+div.blank {
+	height: 30px;
+	width: 100%;
+	background-color: white;
+}
+
+#photoContainer {
+	margin-left: 10%;
+	margin-right: 10%;
+}
+
+#xx {
+	opacity: 0.8;
+	padding: 5px;
+	padding-bottom: 5px;
+	padding-top: 5px;
+}
+
+#xx:hover {
+	opacity: 1.0;
+	transition: 0.5s;
+}
+
+footer {
+	clear: both;
+	height: 100px;
+	width: 100%;
+	background-color: rgb(0, 112, 255);
+	bottom: 0px;
+	margin-top: 50px;
+}
+
+div.bottomLogo {
+	position: relative;
+	float: left;
+	left: 10px;
+	top: 5px;
+}
+
+#footText {
+	position: relative;
+	background-color: transparent;
+	top: 35%;
+}
+
+div.divTop {
+	position: relative;
+	float: right;
+	right: 40px;
+	top: 1px;
+}
+
+a.buttonTop {
+	background-color: silver;
+	width: 58px;
+	display: block;
+	padding: 10px;
+	text-decoration: none;
+	color: black;
+	border-radius: 8px;
+	transition: 0.25s;
+}
+
+a.profileLink {
+	cursor: pointer;
+}
+
+#formContainer {
+	position: relative;
+	height: 170px;
+	margin-top: 10%;
+	width: 700px;
+}
+
+a.button {
+	background-color: green;
+	width: 100px;
+	display: block;
+	padding: 10px;
+	text-decoration: none;
+	color: white;
+	border-radius: 8px;
+	transition: 0.25s;
+}
+
+a.button:hover {
+	opacity: 0.8;
+	transform: scale(1.1);
+	transition: 0.25s;
+}
