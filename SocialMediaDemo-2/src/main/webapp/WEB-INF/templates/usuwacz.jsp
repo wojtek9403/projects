@@ -7,7 +7,8 @@
 <head>
 <meta charset="ISO-8859-1">
 <title>Insert title here</title>
-<link href="/css/profilePic.css" rel='stylesheet' type='text/css'>
+<link href="/css/usuwacz.css" rel='stylesheet' type='text/css'>
+
 </head>
 <body>
 
@@ -20,6 +21,7 @@
 			<div class="divMenu">
 				Menu
 				<ul>
+
 					<li class="liBottom"><a class="buttonLi"
 						href="/SocialMediaDemo/out">Strona profilowa</a></li>
 					<li class="liBottom"><a class="buttonLi"
@@ -28,6 +30,10 @@
 							zdjęcie</a></li>
 					<li class="liBottom"><a class="buttonLi"
 						href="/SocialMediaDemo/delete">Usun profil</a></li>
+					<li class="liBottom"><a class="buttonLi" href="/Demo/usuwacz">Usun
+							kogos</a></li>
+							<li class="liBottom"><a class="buttonLi"
+						href="/SocialMediaDemo/videoUpload">Dodaj film</a></li>
 
 				</ul>
 			</div>
@@ -49,36 +55,40 @@
 			</a>
 
 			<div class="details">
-				<label>${name}</label>
+				<label>Administrator:</label> <label>${name}</label>
 			</div>
 
 
 		</div>
 
 		<div class="blank"></div>
-
 		<div id="formContainer" align="center">
+			<form method="get" action="/Demo/usuwacz">
 
-			<!-- action="/upload?${_csrf.parameterName}=${_csrf.token}" pozwala na wysłanie na server ja ktorym dziła security takiego tokena
-		dzieki ktoremu security pozwoli na wykonanie zapytania - po to jest ten csrf.token -->
+				<div class="login">
+					<label>Wprowadź login : </label> <input name="userNameToRemove"
+						type="text" /> <input type="hidden" name="${_csrf.parameterName}"
+						value="${_csrf.token}" />
+					<!-- wazne !!! bez tego nie dziaÅa-->
+				</div>
+
+				<br />
+				<div class="sub">
+					<input type="submit" value="usuń usera" />
+				</div>
 
 
-			<!-- aby uwierzytelnienie tokenam zadziałło przed$ musi byc adres posta i za nim "?" - tu /uploadProfilePic   -->
-			<form method="post" action="/uploadProfilePic"
-				enctype="multipart/form-data">
-				<label>Dodaj zdjęcie profilowe </label> <input class="fileIn"
-					type="file" name="file"> <input type="hidden"
-					name="${_csrf.parameterName}" value="${_csrf.token}" /> <br /> <br />
-				<input class="sub" type="submit">
 			</form>
 			<br />
-
-			<div class="divbutton">
-				<a class="button" href="/SocialMediaDemo/out">Przeglądaj</a>
+			<div class="divbutton3">
+				<a class="button" href="/SocialMediaDemo/out">Powróć</a>
 			</div>
+
 			<label style="color: red">${err_message}</label>
 
 		</div>
+	</div>
+
 
 
 	</div>

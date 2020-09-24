@@ -28,6 +28,8 @@
 							zdjęcie</a></li>
 					<li class="liBottom"><a class="buttonLi"
 						href="/SocialMediaDemo/delete">Usun profil</a></li>
+					<li class="liBottom"><a class="buttonLi"
+						href="/SocialMediaDemo/videoUpload">Dodaj film</a></li>
 				</ul>
 			</div>
 
@@ -71,6 +73,19 @@
 				</c:forEach>
 
 			</div>
+			
+			<div>
+				<c:forEach var="videoPath" items="${videoPaths}">
+
+					<a id="xx" href="/SocialMediaDemo/out/videos/${videoPath}"><video
+					id = "video" preload = "metadata" 
+					height="200px" width="300px" muted="true" loop="true"
+					poster="" class="videos"
+						><source src="/userImg/${videoPath}#t=0.5" type = "video/mp4" /></video></a>
+					<!-- aby wyświetlić miniature video należy uzyc tagu source i #t=czas w sekundach klatki ktorama byc wyswietlona -->
+				</c:forEach>
+
+			</div>
 
 		</div>
 
@@ -101,6 +116,43 @@
 		</div>
 
 	</footer>
+	<script type="text/javascript">
+
+	
+	
+
+	var video = document.querySelector("video");
+	video.onmouseover = function(){
+	video.setAttribute("autoplay","true");
+}
+	video.onmouseout = function(){
+		video.setAttribute("autoplay","false");
+	}
+
+	var videos = document.getElementsByClassName("videos");
+	[].forEach.call(videos, function (e) {
+	    e.addEventListener('mouseover', hoverVideo, false);
+	    e.addEventListener('mouseout', hideVideo, false);
+	});
+	
+	function hoverVideo(e)
+	{   
+	    this.play();
+	};
+	
+	function hideVideo(e)
+	{
+	    this.pause();
+	};
+
+
+
+	
+	
+
+
+
+	</script>
 
 </body>
 </html>

@@ -113,6 +113,13 @@ public class UserController {
 		
 		return MainServicePerformerImpl.performPhotoView(PictureRepository, model, photoName);
 	}
+	
+	@GetMapping("/out/videos/{videoName}") 
+	public String displayVideo(Model model, @PathVariable("videoName") String videoName )
+	{
+		
+		return MainServicePerformerImpl.performVideoView(PictureRepository, model, videoName);
+	}
     
     
     @GetMapping("/logout")

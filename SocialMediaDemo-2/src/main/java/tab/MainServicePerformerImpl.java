@@ -3,6 +3,8 @@ package tab;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -44,13 +46,26 @@ public class MainServicePerformerImpl implements MainServicePerformer {
 
 		Object[] pics = user.getPictures().toArray();
 
-		List<String> minPaths = new ArrayList<String>();
+		List<String> minPaths = new ArrayList<String>();		
+		List<String> minVideoPaths = new ArrayList<String>();
 
-		for (int i = 0; i < pics.length; i++) {
+
+		for (int i = 0; i < pics.length; i++) 
+		{			
 			Picture picture = (Picture) pics[i];
-			minPaths.add(picture.getMinPicPath());
+			
+			if(picture.orginalPicPath.endsWith(".mp4")) 
+			{
+				minVideoPaths.add(picture.getMinPicPath());
+			}
+			else
+			{			
+				minPaths.add(picture.getMinPicPath());
+			}
 		}
-
+		
+		
+		model.addAttribute("videoPaths", minVideoPaths);
 		model.addAttribute("paths", minPaths);
 		model.addAttribute("profile", user.getProfilePicture());
 		model.addAttribute("name", user.getUsername());
@@ -344,4 +359,109 @@ public class MainServicePerformerImpl implements MainServicePerformer {
 		}
 	}
 
+	@Override
+	public String videoUploader(UserRepository userRepository, PictureRepository PictureRepository, MultipartFile file,
+			String desc, HttpSession session, Model model) {
+
+		if (!file.isEmpty()) {
+			try {
+				UUID uuid = UUID.randomUUID();
+
+				String format = file.getOriginalFilename();
+
+				if (format.endsWith(".mp4")) {
+					System.out.println(format);
+				} else {
+					model.addAttribute("err_message", "obsługujemy formaty : mp4 !");
+					return "videoUpl";
+				}
+
+				String newFilename = "userImg/" + uuid.toString() + format;
+				String minNewFilename = "userImg/" + "M!10!nm" + uuid.toString() + format;
+				File ThFile = new File(newFilename);
+				ThFile.createNewFile();
+
+				File minThFile = new File(minNewFilename);
+				minThFile.createNewFile();
+
+				final int buffer = 4*1024;
+				FileInputStream in = (FileInputStream) file.getInputStream();
+				FileOutputStream out = new FileOutputStream(minThFile);
+				FileOutputStream out1 = new FileOutputStream(ThFile);
+
+				try
+				{
+					byte[] bytes = new byte[buffer];
+					while(in.available() != 0)
+					{
+						in.read(bytes);
+						out.write(bytes);
+						out1.write(bytes);
+
+					}
+					
+				}
+				catch(Exception ex)
+				{
+					System.out.println(ex.getMessage());
+				}	try
+				{
+					
+				}
+				catch(Exception ex)
+				{
+					System.out.println();
+				}
+	
+				System.out.println(minThFile.getAbsolutePath());
+
+				Picture newPic = new Picture();
+
+				try {
+					newPic.setId(PictureRepository.getPictureMaxId() + (long) 1);
+				} catch (Exception ex) {
+					ex.getMessage();
+					newPic.setId((long) 0);
+				}
+
+				newPic.setOrginalPicPath(ThFile.getName());
+				newPic.setMinPicPath(minThFile.getName());
+				newPic.setDescription(desc);
+				PictureRepository.saveAndFlush(newPic);
+
+				String userName = (String) session.getAttribute("user");
+				System.err.println("user z sesji to :" + userName);
+
+				User userZbazy = userRepository.findById(userName).get();
+
+				userZbazy.getPictures().add(newPic);
+				userRepository.save(userZbazy);
+
+			} catch (Exception e) {
+				System.out.println(e.getMessage());
+			}
+		} else {
+			System.out.println("pusty plik");
+		}
+
+		return "redirect:/SocialMediaDemo/out";
+
+	}
+
+	@Override
+	public String performVideoView(PictureRepository PictureRepository, Model model, String videoName) {
+
+		String[] name = videoName.split("M!10!nm");
+
+		model.addAttribute("video", name[1]);
+
+		Picture pic = PictureRepository.findByorginalPicPath(name[1]);
+		System.err.println(pic.getDescription());
+		model.addAttribute("desc", pic.getDescription());
+
+		return "videoDisp";
+	}
+
+
+	
 }

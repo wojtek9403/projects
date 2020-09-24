@@ -7,8 +7,7 @@
 <head>
 <meta charset="ISO-8859-1">
 <title>Insert title here</title>
-<link href="/css/usunProfil.css" rel='stylesheet' type='text/css'>
-
+<link href="/css/main.css" rel='stylesheet' type='text/css'>
 </head>
 <body>
 
@@ -29,6 +28,8 @@
 							zdjęcie</a></li>
 					<li class="liBottom"><a class="buttonLi"
 						href="/SocialMediaDemo/delete">Usun profil</a></li>
+						<li class="liBottom"><a class="buttonLi"
+						href="/SocialMediaDemo/videoUpload">Dodaj film</a></li>
 
 				</ul>
 			</div>
@@ -56,59 +57,55 @@
 
 		</div>
 
-		<div class="blank"></div>
 
 		<div id="formContainer" align="center">
-			<form method="get" action="/SocialMediaDemo/delete">
 
-				<div class="login">
-					<label>Czy usunąć profil oraz wszystkie związane z nim
-						dane?</label> <br /> <input name="zgoda" type="checkbox" /> <input
-						type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
-					<!-- wazne !!! bez tego nie dziaÅa-->
-				</div>
-
-				<br />
-				<div class="sub">
-					<input type="submit" value="usuń" />
-				</div>
-
-
+			<form method="post" action="/videoUpload" enctype="multipart/form-data">
+				<label>Dodaj film </label> <input class="fileIn" type="file"
+					name="file"> <br /> <br /> <label>Wprowadź opis
+					zdjęcia</label> <br />
+				<textarea name="desc" spellcheck="true" rows="5" cols="40"></textarea>
+				<input type="hidden" name="${_csrf.parameterName}"
+					value="${_csrf.token}" /> <br /> <br /> <input class="sub"
+					type="submit">
 			</form>
-
 			<br />
-			<div class="divbutton3">
-				<a class="button" href="/SocialMediaDemo/out">Powróć</a>
+			<div class="divbutton">
+				<a class="button" href="/SocialMediaDemo/out">Przeglądaj</a>
 			</div>
-
-			<label style="color: red">${err_message}</label>
+			<br /> <label style="color: red">${err_message}</label>
 
 		</div>
 
 
-		<footer>
+	</div>
+
+	<div class="blank"></div>
+
+	<footer>
 
 
-			<div class="bottomLogo">
-				<div class="css-3d-text">xyz.com</div>
+		<div class="bottomLogo">
+			<div class="css-3d-text">xyz.com</div>
+		</div>
+
+
+
+		<div id="footText" align="center">
+			<div class="divTop">
+				<a class="buttonTop" href="#top">Na górę</a>
 			</div>
+			<table>
+				<tr>
+					<td>Wojciech Świechowski</td>
+				</tr>
+				<tr>
+					<td>watus.swiecho@gmail.com</td>
+				</tr>
+			</table>
+		</div>
 
+	</footer>
 
-
-			<div id="footText" align="center">
-				<div class="divTop">
-					<a class="buttonTop" href="#top">Na górę</a>
-				</div>
-				<table>
-					<tr>
-						<td>Wojciech Świechowski</td>
-					</tr>
-					<tr>
-						<td>watus.swiecho@gmail.com</td>
-					</tr>
-				</table>
-			</div>
-
-		</footer>
 </body>
 </html>

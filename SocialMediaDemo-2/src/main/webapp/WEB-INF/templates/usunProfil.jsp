@@ -7,7 +7,7 @@
 <head>
 <meta charset="ISO-8859-1">
 <title>Insert title here</title>
-<link href="/css/usuwacz.css" rel='stylesheet' type='text/css'>
+<link href="/css/usunProfil.css" rel='stylesheet' type='text/css'>
 
 </head>
 <body>
@@ -21,7 +21,6 @@
 			<div class="divMenu">
 				Menu
 				<ul>
-
 					<li class="liBottom"><a class="buttonLi"
 						href="/SocialMediaDemo/out">Strona profilowa</a></li>
 					<li class="liBottom"><a class="buttonLi"
@@ -30,8 +29,8 @@
 							zdjęcie</a></li>
 					<li class="liBottom"><a class="buttonLi"
 						href="/SocialMediaDemo/delete">Usun profil</a></li>
-					<li class="liBottom"><a class="buttonLi" href="/Demo/usuwacz">Usun
-							kogos</a></li>
+						<li class="liBottom"><a class="buttonLi"
+						href="/SocialMediaDemo/videoUpload">Dodaj film</a></li>
 
 				</ul>
 			</div>
@@ -53,30 +52,32 @@
 			</a>
 
 			<div class="details">
-				<label>Administrator:</label> <label>${name}</label>
+				<label>${name}</label>
 			</div>
 
 
 		</div>
 
 		<div class="blank"></div>
+
 		<div id="formContainer" align="center">
-			<form method="get" action="/Demo/usuwacz">
+			<form method="get" action="/SocialMediaDemo/delete">
 
 				<div class="login">
-					<label>Wprowadź login : </label> <input name="userNameToRemove"
-						type="text" /> <input type="hidden" name="${_csrf.parameterName}"
-						value="${_csrf.token}" />
+					<label>Czy usunąć profil oraz wszystkie związane z nim
+						dane?</label> <br /> <input name="zgoda" type="checkbox" /> <input
+						type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 					<!-- wazne !!! bez tego nie dziaÅa-->
 				</div>
 
 				<br />
 				<div class="sub">
-					<input type="submit" value="usuń usera" />
+					<input type="submit" value="usuń" />
 				</div>
 
 
 			</form>
+
 			<br />
 			<div class="divbutton3">
 				<a class="button" href="/SocialMediaDemo/out">Powróć</a>
@@ -85,36 +86,31 @@
 			<label style="color: red">${err_message}</label>
 
 		</div>
-	</div>
 
 
-
-	</div>
-
-	<footer>
+		<footer>
 
 
-		<div class="bottomLogo">
-			<div class="css-3d-text">xyz.com</div>
-		</div>
-
-
-
-		<div id="footText" align="center">
-			<div class="divTop">
-				<a class="buttonTop" href="#top">Na górę</a>
+			<div class="bottomLogo">
+				<div class="css-3d-text">xyz.com</div>
 			</div>
-			<table>
-				<tr>
-					<td>Wojciech Świechowski</td>
-				</tr>
-				<tr>
-					<td>watus.swiecho@gmail.com</td>
-				</tr>
-			</table>
-		</div>
 
-	</footer>
 
+
+			<div id="footText" align="center">
+				<div class="divTop">
+					<a class="buttonTop" href="#top">Na górę</a>
+				</div>
+				<table>
+					<tr>
+						<td>Wojciech Świechowski</td>
+					</tr>
+					<tr>
+						<td>watus.swiecho@gmail.com</td>
+					</tr>
+				</table>
+			</div>
+
+		</footer>
 </body>
 </html>

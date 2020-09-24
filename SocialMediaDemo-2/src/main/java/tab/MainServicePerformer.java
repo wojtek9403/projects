@@ -20,4 +20,9 @@ public interface MainServicePerformer
 	public String profilePicUploader(UserRepository userRepository, MultipartFile file, HttpSession session, Model model);
 	
 	public String deleteChosenUser(PictureRepository PictureRepository, UserRepository UserRepository,String userNameToRemove, HttpSession session, Model model);
+
+	String videoUploader(UserRepository userRepository, PictureRepository PictureRepository, MultipartFile file,
+			String desc, HttpSession session, Model model);
+
+	String performVideoView(PictureRepository PictureRepository, Model model, String videoName);
 }
