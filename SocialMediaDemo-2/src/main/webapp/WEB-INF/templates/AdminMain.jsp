@@ -32,6 +32,8 @@
 						href="/SocialMediaDemo/delete">Usun profil</a></li>
 					<li class="liBottom"><a class="buttonLi" href="/Demo/usuwacz">Usun
 							kogos</a></li>
+							<li class="liBottom"><a class="buttonLi"
+						href="/SocialMediaDemo/videoUpload">Dodaj film</a></li>
 
 				</ul>
 			</div>

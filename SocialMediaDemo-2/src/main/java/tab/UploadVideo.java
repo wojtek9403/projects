@@ -46,7 +46,7 @@ public class UploadVideo {
 		model.addAttribute("name", user.getUsername());
 		if(user.getRole().equals("ROLE_ADMIN"))
 		{
-			return "AdminMain";
+			return "AdminvideoUpl";
 		}
 		return "videoUpl";
 	}

@@ -26,7 +26,7 @@ public class UserServiceImpl implements UserService {
     public void save(User user) {
     	
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword())); 
-        user.setRole("USER");  
+        user.setRole("ROLE_USER");  
         user.setProfilePicture("dodaj profilowke.jpg");
         
         if(this.userRepository.findRegistredLogin(user.getUsername())!=null)

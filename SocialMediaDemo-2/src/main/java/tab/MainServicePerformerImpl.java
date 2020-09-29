@@ -56,11 +56,11 @@ public class MainServicePerformerImpl implements MainServicePerformer {
 			
 			if(picture.orginalPicPath.endsWith(".mp4")) 
 			{
-				minVideoPaths.add(picture.getMinPicPath());
+				minVideoPaths.add(picture.getOrginalPicPath());
 			}
 			else
 			{			
-				minPaths.add(picture.getMinPicPath());
+				minPaths.add(picture.getOrginalPicPath());
 			}
 		}
 		
@@ -81,17 +81,30 @@ public class MainServicePerformerImpl implements MainServicePerformer {
 
 		Object[] pics = user.getPictures().toArray();
 
-		List<String> minPaths = new ArrayList<String>();
+		List<String> minPaths = new ArrayList<String>();		
+		List<String> minVideoPaths = new ArrayList<String>();
 
-		for (int i = 0; i < pics.length; i++) {
+
+		for (int i = 0; i < pics.length; i++) 
+		{			
 			Picture picture = (Picture) pics[i];
-			minPaths.add(picture.getMinPicPath());
+			
+			if(picture.orginalPicPath.endsWith(".mp4")) 
+			{
+				minVideoPaths.add(picture.getOrginalPicPath());
+			}
+			else
+			{			
+				minPaths.add(picture.getOrginalPicPath());
+			}
 		}
-
-		System.out.println(minPaths);
+		
+		
+		model.addAttribute("videoPaths", minVideoPaths);
 		model.addAttribute("paths", minPaths);
 		model.addAttribute("profile", user.getProfilePicture());
 		model.addAttribute("name", user.getUsername());
+
 
 		return "AdminView";
 	}
@@ -99,11 +112,9 @@ public class MainServicePerformerImpl implements MainServicePerformer {
 	@Override
 	public String performPhotoView(PictureRepository PictureRepository, Model model, String photoName) {
 
-		String[] name = photoName.split("M!10!nm");
+		model.addAttribute("photo", photoName);
 
-		model.addAttribute("photo", name[1]);
-
-		Picture pic = PictureRepository.findByorginalPicPath(name[1]);
+		Picture pic = PictureRepository.findByorginalPicPath(photoName);
 		System.err.println(pic.getDescription());
 		model.addAttribute("desc", pic.getDescription());
 
@@ -140,12 +151,8 @@ public class MainServicePerformerImpl implements MainServicePerformer {
 					listOfPics.add(picture.getId());
 
 					String org = picture.getOrginalPicPath();
-					String min = picture.getMinPicPath();
 
 					File ThFileToDelete = new File("userImg/" + org);
-					ThFileToDelete.delete();
-
-					ThFileToDelete = new File("userImg/" + min);
 					ThFileToDelete.delete();
 
 				}
@@ -195,12 +202,9 @@ public class MainServicePerformerImpl implements MainServicePerformer {
 
 				byte[] bytes = file.getBytes();
 				String newFilename = "userImg/" + uuid.toString() + format;
-				String minNewFilename = "userImg/" + "M!10!nm" + uuid.toString() + format;
 				File ThFile = new File(newFilename);
 				ThFile.createNewFile();
 
-				File minThFile = new File(minNewFilename);
-				minThFile.createNewFile();
 
 				BufferedImage originalImage = ImageIO.read(new ByteArrayInputStream(bytes));
 
@@ -209,13 +213,6 @@ public class MainServicePerformerImpl implements MainServicePerformer {
 				} else if (originalImage.getWidth() < 1000 || originalImage.getHeight() < 1000) {
 					Thumbnails.of(originalImage).size(originalImage.getWidth(), originalImage.getHeight())
 							.toFile(ThFile);
-				}
-
-				if (originalImage.getWidth() < 200 || originalImage.getHeight() < 200) {
-					Thumbnails.of(originalImage).size(originalImage.getWidth(), originalImage.getHeight())
-							.toFile(minThFile);
-				} else if (originalImage.getWidth() > 200 || originalImage.getHeight() > 200) {
-					Thumbnails.of(originalImage).size(200, 200).toFile(minThFile);
 				}
 
 				Picture newPic = new Picture();
@@ -228,7 +225,6 @@ public class MainServicePerformerImpl implements MainServicePerformer {
 				}
 
 				newPic.setOrginalPicPath(ThFile.getName());
-				newPic.setMinPicPath(minThFile.getName());
 				newPic.setDescription(desc);
 				PictureRepository.saveAndFlush(newPic);
 
@@ -377,16 +373,12 @@ public class MainServicePerformerImpl implements MainServicePerformer {
 				}
 
 				String newFilename = "userImg/" + uuid.toString() + format;
-				String minNewFilename = "userImg/" + "M!10!nm" + uuid.toString() + format;
 				File ThFile = new File(newFilename);
 				ThFile.createNewFile();
 
-				File minThFile = new File(minNewFilename);
-				minThFile.createNewFile();
 
 				final int buffer = 4*1024;
 				FileInputStream in = (FileInputStream) file.getInputStream();
-				FileOutputStream out = new FileOutputStream(minThFile);
 				FileOutputStream out1 = new FileOutputStream(ThFile);
 
 				try
@@ -395,10 +387,10 @@ public class MainServicePerformerImpl implements MainServicePerformer {
 					while(in.available() != 0)
 					{
 						in.read(bytes);
-						out.write(bytes);
 						out1.write(bytes);
 
 					}
+					out1.close();
 					
 				}
 				catch(Exception ex)
@@ -413,7 +405,6 @@ public class MainServicePerformerImpl implements MainServicePerformer {
 					System.out.println();
 				}
 	
-				System.out.println(minThFile.getAbsolutePath());
 
 				Picture newPic = new Picture();
 
@@ -425,7 +416,6 @@ public class MainServicePerformerImpl implements MainServicePerformer {
 				}
 
 				newPic.setOrginalPicPath(ThFile.getName());
-				newPic.setMinPicPath(minThFile.getName());
 				newPic.setDescription(desc);
 				PictureRepository.saveAndFlush(newPic);
 
@@ -451,11 +441,10 @@ public class MainServicePerformerImpl implements MainServicePerformer {
 	@Override
 	public String performVideoView(PictureRepository PictureRepository, Model model, String videoName) {
 
-		String[] name = videoName.split("M!10!nm");
 
-		model.addAttribute("video", name[1]);
+		model.addAttribute("video", videoName);
 
-		Picture pic = PictureRepository.findByorginalPicPath(name[1]);
+		Picture pic = PictureRepository.findByorginalPicPath(videoName);
 		System.err.println(pic.getDescription());
 		model.addAttribute("desc", pic.getDescription());
 

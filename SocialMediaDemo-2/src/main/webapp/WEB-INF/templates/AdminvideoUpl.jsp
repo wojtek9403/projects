@@ -7,7 +7,7 @@
 <head>
 <meta charset="ISO-8859-1">
 <title>Insert title here</title>
-<link href="/css/AdminView.css" rel='stylesheet' type='text/css'>
+<link href="/css/main.css" rel='stylesheet' type='text/css'>
 </head>
 <body>
 
@@ -28,9 +28,7 @@
 							zdjęcie</a></li>
 					<li class="liBottom"><a class="buttonLi"
 						href="/SocialMediaDemo/delete">Usun profil</a></li>
-					<li class="liBottom"><a class="buttonLi" href="/Demo/usuwacz">Usun
-							kogos</a></li>
-							<li class="liBottom"><a class="buttonLi"
+						<li class="liBottom"><a class="buttonLi"
 						href="/SocialMediaDemo/videoUpload">Dodaj film</a></li>
 
 				</ul>
@@ -56,40 +54,33 @@
 				<label>Administrator:</label> <label>${name}</label>
 			</div>
 
+
 		</div>
 
-		<div class="blank"></div>
 
-		<div id="photoContainer">
+		<div id="formContainer" align="center">
 
-
-			<div>
-				<c:forEach var="path" items="${paths}">
-
-					<a id="xx" href="/SocialMediaDemo/out/${path}"><img class = "picTable"
-						src="/userImg/${path}"></img></a>
-
-				</c:forEach>
-
+			<form method="post" action="/videoUpload" enctype="multipart/form-data">
+				<label>Dodaj film </label> <input class="fileIn" type="file"
+					name="file"> <br /> <br /> <label>Wprowadź opis
+					zdjęcia</label> <br />
+				<textarea name="desc" spellcheck="true" rows="5" cols="40"></textarea>
+				<input type="hidden" name="${_csrf.parameterName}"
+					value="${_csrf.token}" /> <br /> <br /> <input class="sub"
+					type="submit">
+			</form>
+			<br />
+			<div class="divbutton">
+				<a class="button" href="/SocialMediaDemo/out">Przeglądaj</a>
 			</div>
-			
-			<div>
-				<c:forEach var="videoPath" items="${videoPaths}">
-
-					<a id="xx" href="/SocialMediaDemo/out/videos/${videoPath}"><video
-					id = "video" preload = "metadata" 
-					height="200px" width="300px" muted="true" loop="true"
-					poster="" class="videos"
-						><source src="/userImg/${videoPath}#t=0.5" type = "video/mp4" /></video></a>
-					<!-- aby wyświetlić miniature video należy uzyc tagu source i #t=czas w sekundach klatki ktorama byc wyswietlona -->
-				</c:forEach>
-
-			</div>
+			<br /> <label style="color: red">${err_message}</label>
 
 		</div>
 
 
 	</div>
+
+	<div class="blank"></div>
 
 	<footer>
 
@@ -115,36 +106,6 @@
 		</div>
 
 	</footer>
-		</footer>
-	<script type="text/javascript">
-
-
-	var video = document.querySelector("video");
-	video.onmouseover = function(){
-	video.setAttribute("autoplay","true");
-}
-	video.onmouseout = function(){
-		video.setAttribute("autoplay","false");
-	}
-
-	var videos = document.getElementsByClassName("videos");
-	[].forEach.call(videos, function (e) {
-	    e.addEventListener('mouseover', hoverVideo, false);
-	    e.addEventListener('mouseout', hideVideo, false);
-	});
-	
-	function hoverVideo(e)
-	{   
-	    this.play();
-	};
-	
-	function hideVideo(e)
-	{
-	    this.pause();
-	};
-
-
-	</script>
 
 </body>
 </html>

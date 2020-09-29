@@ -67,7 +67,7 @@
 			<div>
 				<c:forEach var="path" items="${paths}">
 
-					<a id="xx" href="/SocialMediaDemo/out/${path}"><img
+					<a id="xx" href="/SocialMediaDemo/out/${path}"><img class = "picTable"
 						src="/userImg/${path}"></img></a>
 
 				</c:forEach>
