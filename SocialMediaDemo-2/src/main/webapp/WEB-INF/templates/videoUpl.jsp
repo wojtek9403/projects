@@ -7,7 +7,7 @@
 <head>
 <meta charset="ISO-8859-1">
 <title>Insert title here</title>
-<link href="/css/main.css" rel='stylesheet' type='text/css'>
+<link href="/css/AdminMain.css" rel='stylesheet' type='text/css'>
 </head>
 <body>
 
@@ -63,7 +63,7 @@
 			<form method="post" action="/videoUpload" enctype="multipart/form-data">
 				<label>Dodaj film </label> <input class="fileIn" type="file"
 					name="file"> <br /> <br /> <label>Wprowadź opis
-					zdjęcia</label> <br />
+					filmu</label> <br />
 				<textarea name="desc" spellcheck="true" rows="5" cols="40"></textarea>
 				<input type="hidden" name="${_csrf.parameterName}"
 					value="${_csrf.token}" /> <br /> <br /> <input class="sub"

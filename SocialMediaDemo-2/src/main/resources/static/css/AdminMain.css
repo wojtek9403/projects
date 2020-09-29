@@ -1,4 +1,5 @@
 @charset "UTF-8";
+/*main*/
 html, body {
 	margin: 0px;
 	padding: 0px;
@@ -230,4 +231,4 @@ img.picTable
     max-width: 200px; 
     max-height: 200px;
 }
-
+/*main*/
