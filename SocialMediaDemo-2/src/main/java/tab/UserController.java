@@ -60,7 +60,6 @@ public class UserController {
 		RegistrationValidator = registrationValidator;
 		MainServicePerformerImpl = mainServicePerformerImpl;
 	}
-// walidator na imie i nazwisko, zlikwidować problem wielkich liter w wyszukiwarce poprawicformularz rejestracji
 
 	@GetMapping("/registration")
     public String registration(Model model) {
@@ -169,7 +168,7 @@ public class UserController {
   {
 	  	User user = UserRepository.findById((String) session.getAttribute("user")).get();
 		model.addAttribute("user", user);
-;
+
 	  
 	  return MainServicePerformerImpl.UsersSearcher(UserRepository, model, userName);
   }
