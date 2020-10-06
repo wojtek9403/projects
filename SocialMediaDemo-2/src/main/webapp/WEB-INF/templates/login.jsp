@@ -25,12 +25,12 @@
 					modelAttribute="user">
 
 					<div class="login">
-						<label>Login: </label> <input name="username" type="text" /> <br />
+						 <input name="username" type="text" placeholder="Login"/> <br />
 						<br />
 					</div>
 
 					<div class="haslo">
-						<label>Hasło: </label> <input name="password" type="password" /> <br />
+						<input name="password" type="password" placeholder="Hasło"/> <br />
 						<br /> <label style="color: red">${error}</label> <input
 							type="hidden" name="${_csrf.parameterName}"
 							value="${_csrf.token}" />

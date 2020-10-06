@@ -10,7 +10,7 @@ html, body {
 	position: relative;
 	padding: 0px;
 	margin: 0 auto;
-	min-width: 800px;
+	min-width: 1300px;
 	min-height: 100%;
 }
 
@@ -140,8 +140,21 @@ div.blank {
 }
 
 #photoContainer {
-	margin-left: 10%;
-	margin-right: 10%;
+	margin-left: 15%;
+	margin-right: 15%;
+}
+
+#profileContainer {
+	margin-left: 10px;
+	margin-right: 10px;
+	margin-top:10px;
+	margin-bottom:10px;
+	background-color: #f0f0f0;
+	border-radius: 5px;
+	padding: 3px;
+	max-width: 200px;
+	max-height: 250px;
+	float:left;
 }
 
 #xx {
@@ -231,4 +244,41 @@ img.picTable
     max-width: 200px; 
     max-height: 200px;
 }
+#browser
+{
+    top:3px;
+	position:relative;
+	float:left;
+	margin-left: 60px;
+ 
+}
+#browser input
+{
+    top:0px;
+    padding: 11px;
+    border: none;
+    background-color: silver;
+    width: 400px;
+    outline-style: none;
+	box-shadow: none;
+	border-color: transparent;
+}
+#browser input[value="Szukaj"]
+{
+    position:relative;
+    background-color: #46a8b9;
+    left: -3px;
+    color: white;
+    cursor: pointer;
+    width:100px;
+    outline-style: none;
+	box-shadow: none;
+	border-color: transparent;
+    
+}
+#browser input[value="Szukaj"]:hover {
+	background-color: #eafe78;
+	color:black;	
+}
+
 /*main*/

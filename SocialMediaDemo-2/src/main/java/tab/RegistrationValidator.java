@@ -30,6 +30,10 @@ public class RegistrationValidator implements Validator {
 				"Niepoprawna nazawa uzytkownika");
 		this.validation("[a-zA-z0-9_!#$%&’*+/=?`{|}~^.-]{5,}", user.getPassword(), "password", errors, "err_code",
 				"Hasło musi zawierać co najmniej 5 znaków");
+		this.validation("[a-zA-z0-9_!#$%&’*+/=?`{|}~^.-]{3,}", user.getName(), "Name", errors, "err_code",
+				"Imie musi mieć minimum 3 litery");
+		this.validation("[a-zA-z0-9_!#$%&’*+/=?`{|}~^.-]{3,}", user.getName(), "Surname", errors, "err_code",
+				"Nazwisko musi mieć minimum 3 litery");
 
 		if (!user.getPassword().equals(user.getPasswordConfirm())) {
 			errors.rejectValue("passwordConfirm", "err_code", "hasła muszą być zgodne");

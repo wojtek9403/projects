@@ -107,6 +107,8 @@ input:hover {
 	border-top-color: red;
 	border-style: solid;
 	transition: 2s;
+		outline-style: none;
+	box-shadow: none;
 }
 
 .css-3d-text {

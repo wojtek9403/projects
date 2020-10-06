@@ -40,8 +40,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	      .requiresSecure();
 		
 		http.authorizeRequests()
-				.antMatchers("/images/**", "/css/**", "/resources/**", "/SocialMediaDemo/registration",
-						"/SocialMediaDemo/session")
+				.antMatchers("/images/**", "/css/**", "/resources/**", "/SocialMediaDemo/registration")
 				.permitAll().anyRequest().authenticated().and().formLogin().loginPage("/SocialMediaDemo/login")
 				.defaultSuccessUrl("/SocialMediaDemo/out").permitAll().and().logout()
 				.logoutUrl("/SocialMediaDemo/logout").logoutSuccessUrl("/").permitAll();

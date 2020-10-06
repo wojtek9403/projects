@@ -6,8 +6,11 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Optional;
+import java.util.Set;
 import java.util.UUID;
 
 import javax.imageio.ImageIO;
@@ -46,29 +49,22 @@ public class MainServicePerformerImpl implements MainServicePerformer {
 
 		Object[] pics = user.getPictures().toArray();
 
-		List<String> minPaths = new ArrayList<String>();		
+		List<String> minPaths = new ArrayList<String>();
 		List<String> minVideoPaths = new ArrayList<String>();
 
-
-		for (int i = 0; i < pics.length; i++) 
-		{			
+		for (int i = 0; i < pics.length; i++) {
 			Picture picture = (Picture) pics[i];
-			
-			if(picture.orginalPicPath.endsWith(".mp4")) 
-			{
+
+			if (picture.orginalPicPath.endsWith(".mp4")) {
 				minVideoPaths.add(picture.getOrginalPicPath());
-			}
-			else
-			{			
+			} else {
 				minPaths.add(picture.getOrginalPicPath());
 			}
 		}
-		
-		
+
 		model.addAttribute("videoPaths", minVideoPaths);
 		model.addAttribute("paths", minPaths);
-		model.addAttribute("profile", user.getProfilePicture());
-		model.addAttribute("name", user.getUsername());
+		model.addAttribute("user", user);
 
 		return "out";
 	}
@@ -81,44 +77,41 @@ public class MainServicePerformerImpl implements MainServicePerformer {
 
 		Object[] pics = user.getPictures().toArray();
 
-		List<String> minPaths = new ArrayList<String>();		
+		List<String> minPaths = new ArrayList<String>();
 		List<String> minVideoPaths = new ArrayList<String>();
 
-
-		for (int i = 0; i < pics.length; i++) 
-		{			
+		for (int i = 0; i < pics.length; i++) {
 			Picture picture = (Picture) pics[i];
-			
-			if(picture.orginalPicPath.endsWith(".mp4")) 
-			{
+
+			if (picture.orginalPicPath.endsWith(".mp4")) {
 				minVideoPaths.add(picture.getOrginalPicPath());
-			}
-			else
-			{			
+			} else {
 				minPaths.add(picture.getOrginalPicPath());
 			}
 		}
-		
-		
+
 		model.addAttribute("videoPaths", minVideoPaths);
 		model.addAttribute("paths", minPaths);
-		model.addAttribute("profile", user.getProfilePicture());
-		model.addAttribute("name", user.getUsername());
-
+		model.addAttribute("user", user);
 
 		return "AdminView";
 	}
 
 	@Override
-	public String performPhotoView(PictureRepository PictureRepository, Model model, String photoName) {
+	public String performPhotoView(Model model, String photoName) {
 
 		model.addAttribute("photo", photoName);
 
-		Picture pic = PictureRepository.findByorginalPicPath(photoName);
-		System.err.println(pic.getDescription());
-		model.addAttribute("desc", pic.getDescription());
-
 		return "display";
+	}
+
+	@Override
+	public String performPostView(PictureRepository PictureRepository, Model model, String photoName) {
+
+		Picture pic = PictureRepository.findByorginalPicPath(photoName);
+		model.addAttribute("photo", pic);
+
+		return "photoView";
 	}
 
 	@Override
@@ -204,7 +197,6 @@ public class MainServicePerformerImpl implements MainServicePerformer {
 				String newFilename = "userImg/" + uuid.toString() + format;
 				File ThFile = new File(newFilename);
 				ThFile.createNewFile();
-
 
 				BufferedImage originalImage = ImageIO.read(new ByteArrayInputStream(bytes));
 
@@ -376,35 +368,27 @@ public class MainServicePerformerImpl implements MainServicePerformer {
 				File ThFile = new File(newFilename);
 				ThFile.createNewFile();
 
-
-				final int buffer = 4*1024;
+				final int buffer = 4 * 1024;
 				FileInputStream in = (FileInputStream) file.getInputStream();
 				FileOutputStream out1 = new FileOutputStream(ThFile);
 
-				try
-				{
+				try {
 					byte[] bytes = new byte[buffer];
-					while(in.available() != 0)
-					{
+					while (in.available() != 0) {
 						in.read(bytes);
 						out1.write(bytes);
 
 					}
 					out1.close();
-					
-				}
-				catch(Exception ex)
-				{
+
+				} catch (Exception ex) {
 					System.out.println(ex.getMessage());
-				}	try
-				{
-					
 				}
-				catch(Exception ex)
-				{
+				try {
+
+				} catch (Exception ex) {
 					System.out.println();
 				}
-	
 
 				Picture newPic = new Picture();
 
@@ -441,16 +425,81 @@ public class MainServicePerformerImpl implements MainServicePerformer {
 	@Override
 	public String performVideoView(PictureRepository PictureRepository, Model model, String videoName) {
 
-
-		model.addAttribute("video", videoName);
-
 		Picture pic = PictureRepository.findByorginalPicPath(videoName);
-		System.err.println(pic.getDescription());
-		model.addAttribute("desc", pic.getDescription());
+		model.addAttribute("video", pic);
 
 		return "videoDisp";
 	}
 
+	public String UsersSearcher(UserRepository UserRepository, Model model, String userToFindName) {
 
-	
+		userToFindName.toLowerCase();
+
+		String[] q = userToFindName.split(" ");
+		List<User> users = new ArrayList<User>();
+
+		if (q.length == 2) {
+			try {
+				users.addAll(UserRepository.findAllByNameAndSurname(q[0], q[1]));
+
+				users.addAll(UserRepository.findAllByNameAndSurname(q[1], q[0]));
+
+			} catch (Exception ex) {
+				System.err.println("not found by Name and Surname !");
+			}
+		}
+
+		if (users.size() == 0) {
+
+			for (String xx : q) {
+				try {
+
+					users.addAll(UserRepository.findAllByName(xx));
+
+				} catch (Exception ex) {
+					System.err.println("not found by Name !");
+				}
+				try {
+
+					users.addAll(UserRepository.findAllBySurname(xx));
+
+				} catch (Exception ex) {
+					System.err.println("not found by Surname !");
+				}
+			}
+
+		}
+
+		model.addAttribute("count", users.size());
+		model.addAttribute("Users", users);
+
+		return "UsersByName";
+	}
+
+	public String performUserView(UserRepository UserRepository, Model model, String usersFoundName) {
+
+		User user = UserRepository.findById(usersFoundName).get();
+
+		Object[] pics = user.getPictures().toArray();
+
+		List<String> minPaths = new ArrayList<String>();
+		List<String> minVideoPaths = new ArrayList<String>();
+
+		for (int i = 0; i < pics.length; i++) {
+			Picture picture = (Picture) pics[i];
+
+			if (picture.orginalPicPath.endsWith(".mp4")) {
+				minVideoPaths.add(picture.getOrginalPicPath());
+			} else {
+				minPaths.add(picture.getOrginalPicPath());
+			}
+		}
+
+		model.addAttribute("videoPaths", minVideoPaths);
+		model.addAttribute("paths", minPaths);
+		model.addAttribute("userDetails", user);
+
+		return "SthAccount";
+	}
+
 }

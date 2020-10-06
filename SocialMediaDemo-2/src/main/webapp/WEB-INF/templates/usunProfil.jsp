@@ -17,6 +17,12 @@
 		<div id="heather1">
 
 			<div class="css-3d-text">AntiSocialMedia.com</div>
+			
+			<div id="browser">
+				<form method="get" action="/SocialMediaDemo/users">
+					<input name = "userName" type = "text" placeholder="Wyszukaj" /> <input type="submit" value="Szukaj"/>
+				</form>
+			</div>
 
 			<div class="divMenu">
 				Menu
@@ -47,12 +53,13 @@
 
 			<a class="profileLink" href="/uploadProfilePic">
 				<div class="profilowe">
-					<img alt="upload profile pic" src="/userImg/${profile}">
+					<img alt="upload profile pic" src="/userImg/${user.profilePicture}">
 				</div>
 			</a>
 
 			<div class="details">
-				<label>${name}</label>
+				<label>${user.name}</label>
+				<label>${user.surname}</label>
 			</div>
 
 

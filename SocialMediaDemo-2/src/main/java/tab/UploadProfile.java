@@ -39,8 +39,8 @@ public class UploadProfile {
 	public String GetFileUpload(Model model, HttpSession sess)
 	{
 		User user = userRepository.findById((String) sess.getAttribute("user")).get();
-		model.addAttribute("profile", user.getProfilePicture());
-		model.addAttribute("name", user.getUsername());
+		model.addAttribute("user", user);
+
 
 		if(user.getRole().equals("ROLE_ADMIN"))
 		{

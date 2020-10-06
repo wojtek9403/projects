@@ -60,7 +60,7 @@ public class UserController {
 		RegistrationValidator = registrationValidator;
 		MainServicePerformerImpl = mainServicePerformerImpl;
 	}
-
+// walidator na imie i nazwisko, zlikwidować problem wielkich liter w wyszukiwarce poprawicformularz rejestracji
 
 	@GetMapping("/registration")
     public String registration(Model model) {
@@ -108,11 +108,19 @@ public class UserController {
        
  
 	@GetMapping("/out/{photoName}") 
-	public String display(Model model, @PathVariable("photoName") String photoName )
+	public String displayPost(Model model, @PathVariable("photoName") String photoName )
 	{
 		
-		return MainServicePerformerImpl.performPhotoView(PictureRepository, model, photoName);
+		return MainServicePerformerImpl.performPostView(PictureRepository, model, photoName);
 	}
+	
+	@GetMapping("/out/display/{photoName}") 
+	public String displayPhoto(Model model, @PathVariable("photoName") String photoName )
+	{
+		
+		return MainServicePerformerImpl.performPhotoView(model, photoName);
+	}
+	
 	
 	@GetMapping("/out/videos/{videoName}") 
 	public String displayVideo(Model model, @PathVariable("videoName") String videoName )
@@ -147,12 +155,36 @@ public class UserController {
   public String remover(String zgoda, HttpSession session, Model model)
   {
 	  	User user = UserRepository.findById((String) session.getAttribute("user")).get();
-		model.addAttribute("profile", user.getProfilePicture());
-		model.addAttribute("name", user.getUsername());
+		model.addAttribute("user", user);
+
 	  
 	  return MainServicePerformerImpl.delete(UserRepository, PictureRepository, zgoda, session, model);
   }
     
+  
+  // odtad do nowego kontrolera socialControler
+  
+  @GetMapping("/users")
+  public String FindUser(HttpSession session, Model model, String userName)
+  {
+	  	User user = UserRepository.findById((String) session.getAttribute("user")).get();
+		model.addAttribute("user", user);
+;
+	  
+	  return MainServicePerformerImpl.UsersSearcher(UserRepository, model, userName);
+  }
+  
+  @GetMapping("/users/profile/{userID}")
+  public String showUser(HttpSession session, Model model, @PathVariable("userID") String userID)
+  {
+	  	User user = UserRepository.findById((String) session.getAttribute("user")).get();
+		model.addAttribute("user", user);
+	  
+	  return MainServicePerformerImpl.performUserView(UserRepository, model, userID);
+  }
+  
+  
+  
   
   public UserService getUserService() {
 		return userService;

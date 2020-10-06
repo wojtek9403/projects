@@ -11,7 +11,7 @@ public interface MainServicePerformer
 	
 	public String performAdminView(UserRepository UserRepository, Model model, HttpSession session);
 	
-	public String performPhotoView(PictureRepository PictureRepository, Model model,String photoName);
+	public String performPhotoView(Model model,String photoName);
 	
 	public String delete(UserRepository UserRepository, PictureRepository PictureRepository, String zgoda, HttpSession session, Model model);
 	
@@ -25,4 +25,10 @@ public interface MainServicePerformer
 			String desc, HttpSession session, Model model);
 
 	String performVideoView(PictureRepository PictureRepository, Model model, String videoName);
+	
+	String UsersSearcher(UserRepository UserRepository, Model model, String userToFindName);
+	
+	public String performUserView(UserRepository UserRepository, Model model, String usersFoundName);
+	
+	public String performPostView(PictureRepository PictureRepository, Model model, String photoName);
 }

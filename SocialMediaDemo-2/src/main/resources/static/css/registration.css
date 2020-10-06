@@ -84,21 +84,28 @@ button {
 	border-radius: 8px;
 	transition: 0.25s;
 }
+#login .login label
+{
+	float:left;
+}
 
 a.button:hover, button:hover {
 	opacity: 0.8;
 	transform: scale(1.1);
 	transition: 0.25s;
 }
-
 input {
+	float:left;
+	margin-bottom:5px;
 	border-radius: 5px;
 	border-bottom-color: gray;
 	border-left-color: gray;
 	border-right-color: gray;
 	border-top-color: gray;
-	width: 80%;
+	width: 200px;
 	padding: 4px;
+	outline-style: none;
+	box-shadow: none;
 }
 
 input:hover {

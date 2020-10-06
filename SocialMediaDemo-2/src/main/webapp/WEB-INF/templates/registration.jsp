@@ -25,21 +25,34 @@
 				<form:form method="post" modelAttribute="userForm">
 
 					<div class="login">
-						<label>Login:</label>
-						<form:input type="text" path="username" />
+						<form:input type="text" path="username" placeholder="login"/>
 						<br />
 						<form:errors path="Username" style="color:red"
 							class="form-text text-muted" />
 						<br />
 						<form:errors path="loginIstnieje" style="color:red"
 							class="form-text text-muted" />
-
+						<br />	
+						<form:input type="text" path="name" placeholder="Imię"/>
+						<br />
+						<br />
+						<form:errors path="Name" style="color:red"
+							class="form-text text-muted" />
+						<br />
+	
+						<form:input type="text" path="surname" placeholder="Nazwisko"/>
+						<br />
+						<br />
+						<form:errors path="Surname" style="color:red"
+							class="form-text text-muted" />
 					</div>
+					
 
 
 					<div class="haslo">
-						<label>Hasło: </label>
-						<form:input type="password" path="password" />
+					
+						<form:input type="password" path="password" placeholder="Hasło"/>
+						<br />
 						<br />
 						<form:errors path="password" style="color:red"
 							class="form-text text-muted" />
@@ -47,8 +60,10 @@
 					</div>
 
 					<div class="powt">
-						<br /> <label>Powtórz hasło: </label>
-						<form:input type="password" path="passwordConfirm" />
+						<br /> 
+						<form:input type="password" path="passwordConfirm" placeholder="Powtórz hasło"/>
+ 						<br />
+ 						<br />
 
 						<form:errors path="passwordConfirm" style="color:red"
 							class="form-text text-muted" />

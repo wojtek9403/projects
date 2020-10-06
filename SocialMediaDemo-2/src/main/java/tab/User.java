@@ -15,6 +15,10 @@ public class User {
 	@javax.persistence.Id
 	String Username;
 	
+	String Name;
+	
+	String Surname;
+	
     private String password;
     
 	@Transient
@@ -30,9 +34,45 @@ public class User {
     public User getLoginIstnieje() {
 		return loginIstnieje;
 	}
+    
+    /*
+     * void update();
+     * 
+     * Set<User> friends = new HashSet<User>();
+     * 
+     * void getFriends();
+     * 
+     * void addFriend();
+     * 
+     * void notifyMyFriends();
+     * 
+     * 
+     */
 
 	public void setLoginIstnieje(User loginIstnieje) {
 		this.loginIstnieje = loginIstnieje;
+	}
+
+	public String getName()
+	{
+		return this.Name;
+	}
+	
+	public String getSurname()
+	{
+		return this.Surname;
+	}
+	
+	public void setName(String name)
+	{
+		name.toLowerCase();
+		this.Name = name;
+	}
+	
+	public void setSurname(String surname)
+	{
+		surname.toLowerCase();
+		this.Surname = surname;
 	}
 
 	@ManyToMany 

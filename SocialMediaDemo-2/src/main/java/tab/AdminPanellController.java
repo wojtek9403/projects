@@ -1,7 +1,5 @@
 package tab;
 
-
-
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -18,13 +16,12 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-@Controller 
-@RequestMapping("/Demo") 
+@Controller
+@RequestMapping("/Demo")
 public class AdminPanellController {
-	
-	
+
 	private UserRepository UserRepository;
-	
+
 	private PictureRepository PictureRepository;
 
 	private MainServicePerformer MainServicePerformerImpl;
@@ -37,42 +34,22 @@ public class AdminPanellController {
 		MainServicePerformerImpl = mainServicePerformerImpl;
 	}
 
-	
-    @Secured("ROLE_ADMIN") 
+	@Secured("ROLE_ADMIN")
 	@Cacheable("AdminViewx")
-    @GetMapping("/AdminControll")
-    public String AdminControllPanel(Model model, HttpSession session) {
-    	
-    	return MainServicePerformerImpl.performAdminView(UserRepository, model, session);
-    }
-    
-    @Secured("ROLE_ADMIN") 
-    @GetMapping("/usuwacz")
-    public String remover(String userNameToRemove, HttpSession session, Model model)
-    {
+	@GetMapping("/AdminControll")
+	public String AdminControllPanel(Model model, HttpSession session) {
+
+		return MainServicePerformerImpl.performAdminView(UserRepository, model, session);
+	}
+
+	@Secured("ROLE_ADMIN")
+	@GetMapping("/usuwacz")
+	public String remover(String userNameToRemove, HttpSession session, Model model) {
 		User user = UserRepository.findById((String) session.getAttribute("user")).get();
-		model.addAttribute("profile", user.getProfilePicture());
-		model.addAttribute("name", user.getUsername());
-    	
-    	return 	MainServicePerformerImpl.deleteChosenUser(PictureRepository, UserRepository, userNameToRemove, session, model); 	
-    }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-	
+		model.addAttribute("user", user);
+
+		return MainServicePerformerImpl.deleteChosenUser(PictureRepository, UserRepository, userNameToRemove, session,
+				model);
+	}
+
 }
