@@ -1,0 +1,16 @@
+jasypt:
+    encryptor:
+        password: dbpass
+
+        
+        
+bucket4j:
+  enabled: true
+  filters:
+  - cache-name: buckets
+    url: /*
+    rate-limits:
+    - bandwidths:
+      - capacity: 5
+        time: 10
+        unit: seconds

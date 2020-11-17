@@ -1,0 +1,524 @@
+@charset "UTF-8";
+/*main*/
+html, body {
+	margin: 0px;
+	padding: 0px;
+	height: 100%;
+}
+
+#container {
+	position: relative;
+	padding: 0px;
+	margin: 0 auto;
+	min-width: 1300px;
+	min-height: 100%;
+}
+
+#heather1 {
+	position: relative;
+	display: block;
+	background-color: rgb(0, 112, 255);
+	width: 100%;
+	height: 42px;
+}
+
+div.divbutton2 {
+	position: relative;
+	float: right;
+	right: -100px;
+	top: 1px;
+}
+
+a.buttonW {
+	background-color: red;
+	width: 58px;
+	display: block;
+	padding: 10px;
+	text-decoration: none;
+	color: white;
+	border-radius: 8px;
+	transition: 0.25s;
+}
+
+a.buttonW:hover, a.buttonTop:hover {
+	opacity: 0.8;
+	transform: scale(1.1);
+	transition: 0.25s;
+}
+
+div.divMenu {
+	position: relative;
+	float: right;
+	right: 150px;
+	top: 0px;
+	padding: 5px;
+	padding-top: 12px;
+	width: 150px;
+	height: 25px;
+	cursor: pointer;
+	color: white;
+	background-color: transparent;
+}
+
+ul {
+	margin-top: 12px;
+	list-style-type: none;
+}
+
+ul li a {
+	display: none;
+	background-color: gray;
+	text-decoration: none;
+	color: white;
+	padding: 10px;
+	width: 140px;
+	margin-left: -45px;
+	opacity: 0.8;
+	transition: 0.4s;
+}
+
+div.divMenu:hover ul li a {
+	display: block;
+}
+
+div.divMenu:hover {
+	background-color: navy;
+	transition: 0.4s;
+}
+
+div ul li a:hover {
+	opacity: 0.6;
+	background-color: yellow;
+	color: black;
+	transition: 0.4s;
+}
+
+.css-3d-text {
+	position: relative;
+	cursor: default;
+	top: -10px;
+	padding: 0px;
+	height: 20px;
+	margin-top: 0px;
+	float: left;
+	left: 15px;
+	font-size: 30px;
+	color: #ffffff;
+	font-family: "Arial Black", Gadget, sans-serif;
+	text-shadow: 0px 0px 0 rgb(234, 234, 234), 1px 1px 0 rgb(213, 213, 213),
+		2px 2px 0 rgb(192, 192, 192), 3px 3px 0 rgb(171, 171, 171), 4px 4px 0
+		rgb(151, 151, 151), 5px 5px 0 rgb(130, 130, 130), 6px 6px 0
+		rgb(109, 109, 109), 7px 7px 0 rgb(88, 88, 88), 8px 8px 0
+		rgb(67, 67, 67), 9px 9px 0 rgb(46, 46, 46), 10px 10px 0
+		rgb(25, 25, 25), 11px 11px 10px rgba(0, 0, 0, 1), 11px 11px 1px
+		rgba(0, 0, 0, 0.5), 0px 0px 10px rgba(0, 0, 0, .2);
+}
+
+#header2 {
+	height: 200px;
+	background-color: silver;
+}
+
+div.profilowe {
+	position: absolute;
+	float: left;
+	left: 45px;
+	top: 60px;
+        
+}
+
+div.details {
+	position: absolute;
+	float: left;
+	left: 200px;
+	top: 60px;
+}
+
+div.blank {
+	height: 30px;
+	width: 100%;
+	background-color: white;
+}
+
+#photoContainer {
+	margin-left: 15%;
+	margin-right: 15%;
+}
+
+#profileContainer {
+	margin-left: 10px;
+	margin-right: 10px;
+	margin-top:10px;
+	margin-bottom:10px;
+	background-color: #f0f0f0;
+	border-radius: 5px;
+	padding: 3px;
+	max-width: 200px;
+	max-height: 250px;
+	float:left;
+}
+
+#xx {
+	opacity: 0.8;
+	padding: 5px;
+	padding-bottom: 5px;
+	padding-top: 5px;
+}
+
+#xx:hover {
+	opacity: 1.0;
+	transition: 0.5s;
+}
+
+footer {
+	clear: both;
+	height: 100px;
+	width: 100%;
+	background-color: rgb(0, 112, 255);
+	bottom: 0px;
+	margin-top: 50px;
+}
+
+div.bottomLogo {
+	position: relative;
+	float: left;
+	left: 10px;
+	top: 5px;
+}
+
+#footText {
+	position: relative;
+	background-color: transparent;
+	top: 35%;
+}
+
+div.divTop {
+	position: relative;
+	float: right;
+	right: 40px;
+	top: 1px;
+}
+
+a.buttonTop {
+	background-color: silver;
+	width: 58px;
+	display: block;
+	padding: 10px;
+	text-decoration: none;
+	color: black;
+	border-radius: 8px;
+	transition: 0.25s;
+}
+
+a.profileLink {
+	cursor: pointer;
+}
+
+#formContainer {
+	position: relative;
+	height: 170px;
+	margin-top: 10%;
+	width: 700px;
+}
+
+a.button {
+	background-color: green;
+	width: 100px;
+	display: block;
+	padding: 10px;
+	text-decoration: none;
+	color: white;
+	border-radius: 8px;
+	transition: 0.25s;
+}
+
+a.button:hover {
+	opacity: 0.8;
+	transform: scale(1.1);
+	transition: 0.25s;
+}
+
+img.picTable
+{
+	height: auto; 
+    width: auto; 
+    max-width: 200px; 
+    max-height: 200px;
+}
+#browser
+{
+    top:3px;
+	position:relative;
+	float:left;
+	margin-left: 60px;
+ 
+}
+#browser input
+{
+    top:0px;
+    padding: 11px;
+    border: none;
+    background-color: silver;
+    width: 250px;
+    outline-style: none;
+	box-shadow: none;
+	border-color: transparent;
+}
+#browser input[value="Szukaj"]
+{
+    position:relative;
+    background-color: #46a8b9;
+    left: -3px;
+    color: white;
+    cursor: pointer;
+    width:100px;
+    outline-style: none;
+	box-shadow: none;
+	border-color: transparent;
+    
+}
+#browser input[value="Szukaj"]:hover {
+	background-color: #eafe78;
+	color:black;	
+}
+
+div.Follow input[type = "submit"]
+{
+	background-color: green;
+	width: 108px;
+	display: block;
+	padding: 10px;
+	text-decoration: none;
+	color: white;
+	border-radius: 8px;
+	outline-style: none;
+	box-shadow: none;
+	border-color: transparent;
+	transition: 0.25s;
+	cursor: pointer;
+}
+
+div.Follow input[type = "submit"]:hover
+{
+	opacity: 0.8;
+	transform: scale(1.1);
+	transition: 0.25s;
+}
+
+div.Follow
+{ 
+	position:relative;
+	float: left;
+	top: 45px;
+	left: 200px;	
+}
+
+div.notifs
+{
+    position: relative;
+    display: block;
+    float: left;
+    background-color: transparent;
+    padding: 8px;
+    width: 250px;
+    cursor: pointer;
+    color: white;
+}
+
+div.notifs div.circle
+{
+    position: relative;
+    display: block;
+    float: right;
+    background-color: white;
+    padding: 3px;
+    width: 17px;
+    cursor: pointer;
+    z-index: 100;
+    border-radius: 100px;
+    color: red;
+    font: bold;
+}
+div.notifs div.list
+{
+    position: relative;
+    display: none;
+    background-color: white;
+    width: 100%;
+    max-height: 180px;
+    overflow: auto;
+    padding: 8px;
+    float: left;
+    left:-8px;
+    top: 10px;
+}
+div.notifs div.list div.notifItem
+{
+    position: relative;
+    display: block;
+    background-color: white;
+    color: black;
+    padding: 8px;
+    width: 100%;
+    min-height: 30px;
+    max-height: 50px;
+    float: left;
+    left:-8px;
+    top:-8px;
+    border-top: whitesmoke;
+    border-top-style: dashed;
+    
+    
+}
+
+div.notifs:hover div.list
+{
+    display: block;
+    z-index: 1000;
+
+}
+                .preLoader
+                {
+                    position: fixed;
+                    background-color: white;                   
+                    background-size: cover;
+                    width: 100%;
+                    height: 100%;
+                    top:0%;
+                    left:0%;                
+                }		
+                .disapear
+                {
+                    
+                    animation: vanish 2s forwards;
+                    
+                }
+                @keyframes vanish {
+                    100%{
+                        opacity: 0;
+                        display: none;
+                        z-index: -2000;
+                    }
+                }
+
+                
+                	.preLoader label
+                {
+                	position: relative;
+                	color: blue;
+                	top: 25%;
+                }
+                
+                #loader,
+                #loader:after {
+                  border-radius: 50%;
+                  width: 5em;
+                  height: 5em;
+                }
+                #loader {
+                  margin: 60px auto;
+                  font-size: 10px;
+                  position: relative;
+                  top:30%;
+                  text-indent: -9999em;
+				  border-top: 0.6em solid rgba(41,112,255, 0.2);
+				  border-right: 0.6em solid rgba(41,112,255, 0.2);
+				  border-bottom: 0.6em solid rgba(41,112,255, 0.2);
+				  border-left: 0.6em solid #2970ff;
+                  transform: translateZ(0);
+                  animation: load8 1.1s infinite linear;
+                }
+
+                @keyframes load8 {
+                  0% 
+                  {
+                    transform: rotate(0deg);
+                  }
+                  100% 
+                  {
+                    transform: rotate(360deg);
+                  }
+                }
+                
+ /* uploader */
+				.uploader
+                {
+                    position: fixed;
+                    background-color: white;                   
+                    background-size: cover;
+                    width: 100%;
+                    height: 100%;
+                    top:0%;
+                    left:0%;  
+                    opacity: 0;
+                    z-index: -2000;
+                               
+                }
+                
+                .apear_upload
+                {
+                    
+                    animation: show 1s forwards;
+                    
+                }
+                 @keyframes show {
+                    100%{
+                        opacity: 1;
+                    	background-size: cover;
+                    	display:block;
+                        z-index: 2000;
+                    }
+                }
+ 
+                #anim_upload,
+                #anim_upload:before,
+                #anim_upload:after {
+                  background: #24b021;
+                  animation: load1 1s infinite ease-in-out;
+                  animation: load1 1s infinite ease-in-out;                
+                  width: 0.5em;
+                  height: 1em;
+                }
+                #anim_upload {
+                  color: #24b021;
+                  text-indent: -9999em;
+                  margin: 88px auto;
+                  position: relative;
+                  top:30%;
+                  transform: translateZ(0);
+                  transform: translateZ(0);                 
+                  transform: translateZ(0);
+                  animation-delay: -0.16s;
+                  animation-delay: -0.16s;
+                }
+                #anim_upload:before,
+                #anim_upload:after {
+                  position: absolute;
+                  top: 0;
+                  content: '';
+                }
+                #anim_upload:beloaderfore {
+                  left: -1em;
+                  animation-delay: -0.32s;
+                  animation-delay: -0.32s;                
+                }
+                #anim_upload:after {
+                  left: 1em;
+                }
+
+                @keyframes load1 {
+                  0%,
+                  80%,
+                  100% {
+                    box-shadow: 0 0;
+                    height: 2em;
+                  }
+                  40% {
+                    box-shadow: 0 -1em;
+                    height: 3em;
+                  }
+                }               
+
+
+
+/*main*/

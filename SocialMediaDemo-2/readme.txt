@@ -1,1 +1,0 @@
- to connect this project to it's database You should paste given database password to src/main/resources/application.yml in place of XXX
