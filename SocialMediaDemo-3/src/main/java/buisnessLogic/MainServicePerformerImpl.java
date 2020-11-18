@@ -515,7 +515,7 @@ public class MainServicePerformerImpl implements MainServicePerformer {
 			}
 		}
 
-		if (users.size() == 0) {
+		if (setOfUsers.size() == 0) {
 
 			for (String xx : q) {
 
