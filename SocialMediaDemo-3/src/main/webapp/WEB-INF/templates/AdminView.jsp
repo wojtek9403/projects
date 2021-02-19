@@ -40,6 +40,8 @@
 						href="/SocialMediaDemo/videoUpload">Dodaj film</a></li>
 						<li class="liBottom"><a class="buttonLi"
 						href="/SocialMediaDemo/user/friends">Obserwowani</a></li>
+						<li class="liBottom"><a class="buttonLi"
+						href="/SocialMediaDemo/table">Aktualności</a></li>
 
 				</ul>
 			</div>

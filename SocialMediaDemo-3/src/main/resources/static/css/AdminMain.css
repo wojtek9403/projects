@@ -371,6 +371,11 @@ div.notifs div.list div.notifItem
     
 }
 
+#posts
+{
+	overflow: auto;
+}
+
 div.notifs:hover div.list
 {
     display: block;

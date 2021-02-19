@@ -1,5 +1,7 @@
 package mainPackage;
 
+import java.io.IOException;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.cache.annotation.Cacheable;
@@ -10,30 +12,36 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.thymeleaf.TemplateEngine;
+import org.thymeleaf.context.Context;
 
 import buisnessLogic.MainServicePerformer;
 import buisnessLogic.MulitComparator;
 import buisnessLogic.RegistrationValidator;
 import dbModelsnDAOs.CommentsRepository;
-import dbModelsnDAOs.FriendsRepository;
-import dbModelsnDAOs.NotifyRepository;
 import dbModelsnDAOs.PictureRepository;
 import dbModelsnDAOs.User;
 import dbModelsnDAOs.UserRepository;
 
 @Import({ buisnessLogic.MainServicePerformerImpl.class, buisnessLogic.MulitComparator.class,
-		buisnessLogic.RegistrationValidator.class })
+		buisnessLogic.RegistrationValidator.class})
 @RequestMapping("/SocialMediaDemo")
 @Controller
 @EnableGlobalMethodSecurity(securedEnabled = true)
 public class UserController {
 
+	private EmailSender emailSenderImpl;
+	
+	private TemplateEngine templateEngine;
+	
 	private UserService userService;
 
 	private SecurityService securityService;
-
-	private UserSessionProvider UserDelivery;
 
 	private UserRepository UserRepository;
 
@@ -43,28 +51,24 @@ public class UserController {
 
 	private MainServicePerformer MainServicePerformerImpl;
 
-	private FriendsRepository FriendsRepository;
-
-	private NotifyRepository NotifyRepository;
-
 	private CommentsRepository CommentsRepository;
 
-	public UserController(UserService userService, SecurityService securityService, UserSessionProvider userDelivery,
+	public UserController(UserService userService, SecurityService securityService,
 			dbModelsnDAOs.UserRepository userRepository, dbModelsnDAOs.PictureRepository pictureRepository,
 			buisnessLogic.RegistrationValidator registrationValidator, MainServicePerformer mainServicePerformerImpl,
-			dbModelsnDAOs.FriendsRepository FriendsRepository, dbModelsnDAOs.NotifyRepository NotifyRepository,
-			dbModelsnDAOs.CommentsRepository CommentsRepository) {
+			dbModelsnDAOs.CommentsRepository CommentsRepository,
+			EmailSender emailSenderImpl,
+			TemplateEngine templateEngine) {
 		super();
 		this.userService = userService;
 		this.securityService = securityService;
-		UserDelivery = userDelivery;
 		UserRepository = userRepository;
 		PictureRepository = pictureRepository;
 		RegistrationValidator = registrationValidator;
 		MainServicePerformerImpl = mainServicePerformerImpl;
-		this.FriendsRepository = FriendsRepository;
-		this.NotifyRepository = NotifyRepository;
 		this.CommentsRepository = CommentsRepository;
+		this.emailSenderImpl =  emailSenderImpl;
+		this.templateEngine = templateEngine;
 	}
 
 	@GetMapping("/registration")
@@ -75,7 +79,10 @@ public class UserController {
 	}
 
 	@PostMapping("/registration")
-	public String registration(@ModelAttribute("userForm") @Validated User userForm, BindingResult bindingResult) {
+	public String registration(@ModelAttribute("userForm") @Validated User userForm, BindingResult bindingResult) throws IOException
+	{
+		
+		String orgPass = userForm.getPassword();
 
 		RegistrationValidator.validate(userForm, bindingResult);
 
@@ -84,8 +91,21 @@ public class UserController {
 		}
 
 		userService.save(userForm);
-		securityService.autoLogin(userForm.getUsername(), userForm.getPasswordConfirm());
-
+		
+	try {
+		Context context = new Context();
+		context.setVariable("header", "Witaj "+ userForm.getName());
+		context.setVariable("title", "Dziękujemy za zarejestrowanie się w serwisie");
+		context.setVariable("description", "W przyszłości proces ten posłuży do dwuetapowego logowania. Tymczasem "
+				+ "dziękujemy za review tej aplikacji, twój poświęcony czas pozwoli nam dopracować aplikację !"
+				+ " Pozdrawiam serdecznie !");		
+		String body = templateEngine.process("template.html", context);		
+		emailSenderImpl.sendEmail(userForm.getEmail(), "SocialMediaDemo.pl", body);
+	}catch (Exception e) {
+		System.err.println("nie udało się wysłać wiadomości powitalnej - sprawdz poprawność adresu @ lub wyłącz lokalny antywirus i spróbuj ponownie");
+	}
+	
+		securityService.autoLogin(userForm.getUsername(), orgPass); 
 		return "redirect:/SocialMediaDemo/out";
 	}
 
@@ -102,7 +122,7 @@ public class UserController {
 	@GetMapping({ "/", "/out" })
 	public String welcome1(Model model, HttpSession session, MulitComparator MulitComparator) {
 
-		return MainServicePerformerImpl.performProfileView(UserRepository, UserDelivery, model, session,
+		return MainServicePerformerImpl.performProfileView(UserRepository, model, session,
 				MulitComparator);
 
 	}
@@ -130,8 +150,6 @@ public class UserController {
 	@GetMapping("/logout")
 	public String logout(HttpSession session) {
 
-		UserDelivery.saveUserName(null);
-
 		SecurityContextHolder.getContext().setAuthentication(null);
 		session.invalidate();
 
@@ -140,10 +158,10 @@ public class UserController {
 		return "redirect:/SocialMediaDemo/login";
 	}
 
-	@ExceptionHandler(Exception.class)
-	public String handleException(Exception ex) {
-		return "Error";
-	}
+//	@ExceptionHandler(Exception.class)
+//	public String handleException(Exception ex) {
+//		return "Error";
+//	}
 
 	// needs to be updated !
 	// needs to delete friends, comments etc.
@@ -187,6 +205,12 @@ public class UserController {
 	public String comentPhoto(HttpSession session, String tresc, String pic) {
 		return MainServicePerformerImpl.comentPhoto(session, tresc, pic, CommentsRepository, UserRepository,
 				PictureRepository);
+	}
+	
+	@GetMapping("/table")
+	public String tab(Model model, HttpSession session)
+	{	
+		return MainServicePerformerImpl.tablica(UserRepository, model, session);
 	}
 
 }

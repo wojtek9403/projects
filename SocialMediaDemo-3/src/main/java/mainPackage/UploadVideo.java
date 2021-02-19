@@ -25,16 +25,15 @@ import dbModelsnDAOs.User;
 import dbModelsnDAOs.UserRepository;
 import net.coobird.thumbnailator.Thumbnails;
 
-@Import({buisnessLogic.MainServicePerformerImpl.class})
+@Import({ buisnessLogic.MainServicePerformerImpl.class })
 @Controller
 public class UploadVideo {
-	
+
 	private MainServicePerformer MainServicePerformerImpl;
-	
+
 	private PictureRepository PictureRepository;
-	
+
 	private UserRepository UserRepository;
-	
 
 	public UploadVideo(MainServicePerformer mainServicePerformerImpl, dbModelsnDAOs.PictureRepository pictureRepository,
 			dbModelsnDAOs.UserRepository userRepository) {
@@ -45,28 +44,25 @@ public class UploadVideo {
 	}
 
 	@GetMapping("/SocialMediaDemo/videoUpload")
-	public String GetFileUpload(Model model, HttpSession sess,@RequestParam(defaultValue = "false") String error)
-	{
+	public String GetFileUpload(Model model, HttpSession sess, @RequestParam(defaultValue = "false") String error) {
 		User user = UserRepository.findById((String) sess.getAttribute("user")).get();
 		model.addAttribute("user", user);
-		
-		if(error.equals("true"))
-		{ 
+
+		if (error.equals("true")) {
 			model.addAttribute("err_message", "obsługujemy format mp4 !");
 		}
-		
-		if(user.getRole().equals("ROLE_ADMIN"))
-		{
+
+		if (user.getRole().equals("ROLE_ADMIN")) {
 			return "AdminvideoUpl";
 		}
 		return "videoUpl";
 	}
-	
+
 	@PostMapping("/videoUpload")
 	@Transactional
-	public String FileUpload(@RequestParam("file") MultipartFile file, String desc, HttpSession session, Model model) throws IllegalStateException, IOException
-	{
-		return  MainServicePerformerImpl.videoUploader(UserRepository, PictureRepository, file, desc, session, model);
+	public String FileUpload(@RequestParam("file") MultipartFile file, String desc, HttpSession session, Model model)
+			throws IllegalStateException, IOException {
+		return MainServicePerformerImpl.videoUploader(UserRepository, PictureRepository, file, desc, session, model);
 
 	}
 

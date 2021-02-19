@@ -1,12 +1,11 @@
 package mainPackage;
 
-import org.jasypt.encryption.StringEncryptor;
-import org.jasypt.encryption.pbe.PooledPBEStringEncryptor;
-import org.jasypt.encryption.pbe.config.SimpleStringPBEConfig;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.InternalAuthenticationServiceException;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -15,6 +14,9 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.access.ExceptionTranslationFilter;
+import org.springframework.security.web.access.intercept.FilterSecurityInterceptor;
+import org.springframework.security.web.context.SecurityContextPersistenceFilter;
 
 @Configuration
 @EnableWebSecurity
@@ -32,21 +34,16 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		return new BCryptPasswordEncoder();
 	}
 
-
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-	    http.requiresChannel()
-	      .requestMatchers(r -> r.getHeader("X-Forwarded-Proto") != null)
-	      .requiresSecure();
-		
 		http.authorizeRequests()
-				.antMatchers("/images/**", "/css/**", "/resources/**", "/SocialMediaDemo/registration")
-				.permitAll().anyRequest().authenticated().and().formLogin().loginPage("/SocialMediaDemo/login")
+		.antMatchers("/images/**", "/css/**", "/resources/**", "/SocialMediaDemo/registration")
+				.permitAll()
+				.anyRequest().authenticated()
+				.and().formLogin().loginPage("/SocialMediaDemo/login")
 				.defaultSuccessUrl("/SocialMediaDemo/out").permitAll().and().logout()
 				.logoutUrl("/SocialMediaDemo/logout").logoutSuccessUrl("/").permitAll();
-
-		http.requiresChannel().requestMatchers(r -> r.getHeader("X-Forwarded-Proto") != null).requiresSecure();
-
+			    
 	}
 
 	@Bean

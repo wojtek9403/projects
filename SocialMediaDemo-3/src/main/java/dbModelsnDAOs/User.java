@@ -18,43 +18,52 @@ import javax.persistence.Transient;
 
 import org.springframework.ui.Model;
 
-
 @Entity
 @Table(name = "Person")
 public class User {
 
 	@javax.persistence.Id
 	String Username;
-	
+
 	String Name;
-	
+
 	String Surname;
-	
-    private String password;
-    
+
+	private String password;
+
 	@Transient
-    private String passwordConfirm;
-    
-    String role;
-    
-    String profilePicture;
-    
-    @Transient 
-    private User loginIstnieje;
-    
-    public User getLoginIstnieje() {
+	private String passwordConfirm;
+
+	String role;
+
+	String profilePicture;
+	
+	String email;
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	@Transient
+	private User loginIstnieje;
+
+	public User getLoginIstnieje() {
 		return loginIstnieje;
 	}
-    
-    @OneToMany(mappedBy="owner")
-    Set<Notify> myNotifs = new HashSet<Notify>();
-    
-    @ManyToMany
-    Set<User> friends = new HashSet<User>();
-    
-	@ManyToMany 
-    Set<Picture> pictures = new HashSet<Picture>();
-	
+
+	@OneToMany(mappedBy = "owner")
+	Set<Notify> myNotifs = new HashSet<Notify>();
+
+	@ManyToMany
+	Set<User> friends = new HashSet<User>();
+
+	@ManyToMany
+	Set<Picture> pictures = new HashSet<Picture>();
+
 	@OneToMany(mappedBy = "Comentator")
 	Set<Comments> myComments = new HashSet<Comments>();
 
@@ -66,12 +75,11 @@ public class User {
 		this.myNotifs = myNotifs;
 	}
 
-	public void setName(String name)
-	{
+	public void setName(String name) {
 		name.toLowerCase();
 		this.Name = name;
 	}
-	
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -97,16 +105,14 @@ public class User {
 		return true;
 	}
 
-	public void setSurname(String surname)
-	{
+	public void setSurname(String surname) {
 		surname.toLowerCase();
 		this.Surname = surname;
 	}
-	
+
 	@Override
-	public String toString()
-	{
-		
+	public String toString() {
+
 		return Username;
 	}
 
@@ -122,11 +128,9 @@ public class User {
 		return Name;
 	}
 
-
 	public String getSurname() {
 		return Surname;
 	}
-
 
 	public String getPassword() {
 		return password;
@@ -181,51 +185,44 @@ public class User {
 	}
 //	
 
-	public void notify(String nadawcaID, String nadawca, String odbiorcaID, String tresc, User owner, NotifyRepository notifyRepository, String what, String path)
-	{
-		  Notify newNotif = new Notify();
-		  newNotif.setNadawcaID(nadawcaID);
-		  newNotif.setNadawca(nadawca);
-		  newNotif.setOdbiorca(odbiorcaID);
-		  newNotif.setTresc(tresc);		  
-		  newNotif.setOwner(owner); 
-		  newNotif.setWhat(what);
-		  newNotif.setPath(path);
-		  notifyRepository.save(newNotif);
+	public void notify(String nadawcaID, String nadawca, String odbiorcaID, String tresc, User owner,
+			NotifyRepository notifyRepository, String what, String path) {
+		Notify newNotif = new Notify();
+		newNotif.setNadawcaID(nadawcaID);
+		newNotif.setNadawca(nadawca);
+		newNotif.setOdbiorca(odbiorcaID);
+		newNotif.setTresc(tresc);
+		newNotif.setOwner(owner);
+		newNotif.setWhat(what);
+		newNotif.setPath(path);
+		notifyRepository.save(newNotif);
 	}
-	
-	public void updateNotifs(Model model)
-	{
-		Set<Notify> notifs = this.getMyNotifs();		
-		
+
+	public void updateNotifs(Model model) {
+		Set<Notify> notifs = this.getMyNotifs();
+
 		List<Notify> listOfNotifs = new ArrayList<Notify>(notifs);
-		
+
 		Comparator<Notify> comp = new Comparator<Notify>() {
 
 			@Override
 			public int compare(Notify o1, Notify o2) {
-				
-				if(o1.getId() < o2.getId())
-				{
+
+				if (o1.getId() < o2.getId()) {
 					return 1;
-				}
-				else if(o1.getId() > o2.getId())
-				{
+				} else if (o1.getId() > o2.getId()) {
 					return -1;
-				}
-				else
-				{
+				} else {
 					return 0;
 				}
 			}
-			
-		};
-		
-		listOfNotifs.sort(comp);		
 
-			model.addAttribute("notifs", listOfNotifs);
-			
+		};
+
+		listOfNotifs.sort(comp);
+
+		model.addAttribute("notifs", listOfNotifs);
+
 	}
-	
-	
+
 }

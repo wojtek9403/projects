@@ -36,6 +36,11 @@
 						<form:input type="text" path="name" placeholder="Imię"/>
 						<br />
 						<br />
+						<form:errors path="email" style="color:red" class="form-text text-muted" />
+						<br/>					
+						<form:input type="text" path="email" placeholder="E-mail"/>
+						<br />
+						<br />
 						<form:errors path="Name" style="color:red"
 							class="form-text text-muted" />
 						<br />
@@ -95,7 +100,6 @@
 
 	<footer>
 
-
 	<div class="bottomLogo">
 		<div class="css-3d-text">xyz.com</div>
 	</div>
@@ -115,5 +119,18 @@
 	</footer>
 
 
+
+
+
+
+
+
+
+
+<script type="text/javascript">
+
+	alert("Po dokonaniu rejestracji prosimy o odczytanie wysłanej na podany adres E-mail wiadomości powitalnej !");
+
+</script>
 </body>
 </html>

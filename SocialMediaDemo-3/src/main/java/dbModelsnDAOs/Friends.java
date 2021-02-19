@@ -12,15 +12,15 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "Friends")
 public class Friends {
-	
+
 	@Id
 	@GeneratedValue
 	Long id;
-	
+
 	String userName;
-	
+
 	String friendName;
-	
+
 	@ManyToMany(mappedBy = "friends")
 	Set<User> user = new HashSet<User>();
 

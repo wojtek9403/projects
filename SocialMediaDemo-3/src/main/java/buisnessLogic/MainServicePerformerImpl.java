@@ -22,6 +22,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Import;
 import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 import org.springframework.web.multipart.MultipartFile;
@@ -35,7 +36,6 @@ import dbModelsnDAOs.Picture;
 import dbModelsnDAOs.PictureRepository;
 import dbModelsnDAOs.User;
 import dbModelsnDAOs.UserRepository;
-import mainPackage.UserSessionProvider;
 import net.coobird.thumbnailator.Thumbnails;
 
 @Service
@@ -52,18 +52,14 @@ public class MainServicePerformerImpl implements MainServicePerformer {
 	}
 
 	@Override
-	public String performProfileView(UserRepository UserRepository, UserSessionProvider userDelivery, Model model,
+	public String performProfileView(UserRepository UserRepository, Model model,
 			HttpSession session, MulitComparator MulitComparator) {
 
 		session.setMaxInactiveInterval(120);
 
-		if (session.getAttribute("user") != null) {
-			System.err.println(session.getAttribute("user"));
-			userDelivery.saveUserName(null);
-		} else {
-			System.err.println(session.getAttribute("user"));
-			session.setAttribute("user", userDelivery.getUserName());
-			userDelivery.saveUserName(null);
+		if (session.getAttribute("user") == null) {
+			
+			session.setAttribute("user", SecurityContextHolder.getContext().getAuthentication().getName());
 		}
 
 		User user = UserRepository.findById((String) session.getAttribute("user")).get();
@@ -280,10 +276,6 @@ public class MainServicePerformerImpl implements MainServicePerformer {
 							NotifyRepository, " zdjęcie ", ThFile.getName());
 				}
 
-				// userZbazy.notify(userZbazy, " dodał(a) ", " zdjęcie ",
-				// "videos/"+ThFile.getName(), userRepository, FriendsRepository,
-				// NotifyRepository);
-
 			} catch (Exception e) {
 				System.out.println(e.getMessage());
 			}
@@ -315,7 +307,7 @@ public class MainServicePerformerImpl implements MainServicePerformer {
 
 				if (userZbazy0.getProfilePicture() != null) {
 					File ThFileToDelete = new File("userImg/" + userZbazy0.getProfilePicture());
-					ThFileToDelete.delete(); // działa usuwa plik, nalezy w nazwie wskazac bezpoosredni katalog/nazwa
+					ThFileToDelete.delete(); 
 				}
 
 				UUID uuid = UUID.randomUUID();
@@ -419,17 +411,26 @@ public class MainServicePerformerImpl implements MainServicePerformer {
 				ThFile.createNewFile();
 
 				final int buffer = 4 * 1024;
+
 				FileInputStream in = (FileInputStream) file.getInputStream();
+
 				FileOutputStream out1 = new FileOutputStream(ThFile);
 
 				try {
+
 					byte[] bytes = new byte[buffer];
+
 					while (in.available() != 0) {
+
 						in.read(bytes);
+
 						out1.write(bytes);
 
 					}
+
 					out1.close();
+
+					in.close();
 
 				} catch (Exception ex) {
 					System.out.println(ex.getMessage());
@@ -586,7 +587,6 @@ public class MainServicePerformerImpl implements MainServicePerformer {
 		return "SthAccount";
 	}
 
-//-----------------------------------------------------------------------------------------------------------//
 	public String addUserToFollow(HttpSession session, String toFollow, UserRepository UserRepository) {
 
 		User user = UserRepository.findById((String) session.getAttribute("user")).get();
@@ -629,8 +629,7 @@ public class MainServicePerformerImpl implements MainServicePerformer {
 	public String comentPhoto(HttpSession session, String tresc, String pic, CommentsRepository CommentsRepository,
 			UserRepository UserRepository, PictureRepository PictureRepository) {
 		Picture picture = PictureRepository.findById(Long.parseLong(pic)).get();
-		User user = UserRepository.findById((String) session.getAttribute("user")).get(); // user ktory oglada foto
-																							// (niekoniecznie wlascicel)
+		User user = UserRepository.findById((String) session.getAttribute("user")).get(); 																					// (niekoniecznie wlascicel)
 
 		Comments com = new Comments();
 		com.setTresc(tresc);
@@ -652,6 +651,16 @@ public class MainServicePerformerImpl implements MainServicePerformer {
 
 		}
 
+	}
+	
+	public String tablica(UserRepository UserRepository, Model model, HttpSession session)
+	{
+		User user = UserRepository.findById((String) session.getAttribute("user")).get();
+		
+		user.updateNotifs(model);
+		model.addAttribute("user", user);
+
+		return "table";
 	}
 
 }

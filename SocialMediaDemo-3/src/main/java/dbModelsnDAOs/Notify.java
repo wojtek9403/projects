@@ -15,11 +15,12 @@ public class Notify {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	Long id;
-	
+
 	String nadawcaID;
 	String odbiorca;
 	String nadawca;
 	String tresc;
+
 	public String getNadawcaID() {
 		return nadawcaID;
 	}
@@ -30,7 +31,7 @@ public class Notify {
 
 	String what;
 	String path;
-	
+
 	@ManyToOne
 	User owner;
 
@@ -78,7 +79,7 @@ public class Notify {
 		return tresc;
 	}
 
-	public void setTresc(String tresc) { 
+	public void setTresc(String tresc) {
 		this.tresc = tresc;
 	}
 
@@ -89,8 +90,5 @@ public class Notify {
 	public void setOwner(User owner) {
 		this.owner = owner;
 	}
-	
 
-	
-	
 }

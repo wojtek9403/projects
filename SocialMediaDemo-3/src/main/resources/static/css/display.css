@@ -1,119 +1,119 @@
 @charset "UTF-8";
 html, body
-	{
-	height: 100%;
-	margin: 0px;
-	background-color: gray;
+{
+height: 100%;
+margin: 0px;
+background-color: gray;
 }
 
 #container {
-	background-color: gray;
-	height: 100%;
+background-color: gray;
+height: 100%;
 }
 
 #container2 {
-	margin-top: 10px;
-	margin-bottom: 10px;
+margin-top: 10px;
+margin-bottom: 10px;
 }
 
 #disp {
-	margin-top: 10px;
-	margin-bottom: 10px;
+margin-top: 10px;
+margin-bottom: 10px;
 }
-                  .preLoader
-                {
-                    position: fixed;
-                    background-color: white;                   
-                    background-size: cover;
-                    width: 100%;
-                    height: 100%;
-                    top:0%;
-                    left:0%;                
-                }		
-                .disapear
-                {
-                    
-                    animation: vanish 1s forwards;
-                    
-                }
-                @keyframes vanish {
-                    100%{
-                        opacity: 0;
-                        display: none;
-                        z-index: -2000;
-                    }
-                }
+.preLoader
+{
+	position: fixed;
+	background-color: white;                   
+	background-size: cover;
+	width: 100%;
+	height: 100%;
+	top:0%;
+	left:0%;                
+}		
+.disapear
+{
+	
+	animation: vanish 1s forwards;
+	
+}
+@keyframes vanish {
+	100%{
+		opacity: 0;
+		display: none;
+		z-index: -2000;
+	}
+}
 
-                .uploader
-                {
-                    position: fixed;
-                    background-color: white;                   
-                    background-size: cover;
-                    width: 100%;
-                    height: 100%;
-                    top:0%;
-                    left:0%;  
-                    opacity: 0;
-                    z-index: -2000;
-                               
-                }
-                
-                .apear_upload
-                {
-                    
-                    animation: show 1s forwards;
-                    
-                }
-                 @keyframes show {
-                    100%{
-                        opacity: 1;
-                    	background-size: cover;
-                    	display:block;
-                        z-index: 2000;
-                    }
-                }
-                .uploader label
-                {
-                	position: relative;
-                	top: 60%;
-                	font-size: x-large;
-                }
-                	.preLoader label
-                {
-                	position: relative;
-                	color: cornflowerblue;
-                	top: 25%;
-                }
-                
-                #loader,
-                #loader:after {
-                  border-radius: 50%;
-                  width: 5em;
-                  height: 5em;
-                }
-                #loader {
-                  margin: 60px auto;
-                  font-size: 10px;
-                  position: relative;
-                  top:30%;
-                  text-indent: -9999em;
-                  border-top: 0.6em solid rgba(102,180,219, 0.2);
-                  border-right: 0.6em solid rgba(102,180,219, 0.2);
-                  border-bottom: 0.6em solid rgba(102,180,219, 0.2);
-                  border-left: 0.6em solid #66b4db;
-                  transform: translateZ(0);
-                  animation: load8 1.1s infinite linear;
-                }
+.uploader
+{
+	position: fixed;
+	background-color: white;                   
+	background-size: cover;
+	width: 100%;
+	height: 100%;
+	top:0%;
+	left:0%;  
+	opacity: 0;
+	z-index: -2000;
+			   
+}
 
-                @keyframes load8 {
-                  0% 
-                  {
-                    transform: rotate(0deg);
-                  }
-                  100% 
-                  {
-                    transform: rotate(360deg);
-                  }
-                }
-                
-                
+.apear_upload
+{
+	
+	animation: show 1s forwards;
+	
+}
+ @keyframes show {
+	100%{
+		opacity: 1;
+		background-size: cover;
+		display:block;
+		z-index: 2000;
+	}
+}
+.uploader label
+{
+	position: relative;
+	top: 60%;
+	font-size: x-large;
+}
+	.preLoader label
+{
+	position: relative;
+	color: cornflowerblue;
+	top: 25%;
+}
+
+#loader,
+#loader:after {
+  border-radius: 50%;
+  width: 5em;
+  height: 5em;
+}
+#loader {
+  margin: 60px auto;
+  font-size: 10px;
+  position: relative;
+  top:30%;
+  text-indent: -9999em;
+  border-top: 0.6em solid rgba(102,180,219, 0.2);
+  border-right: 0.6em solid rgba(102,180,219, 0.2);
+  border-bottom: 0.6em solid rgba(102,180,219, 0.2);
+  border-left: 0.6em solid #66b4db;
+  transform: translateZ(0);
+  animation: load8 1.1s infinite linear;
+}
+
+@keyframes load8 {
+  0% 
+  {
+	transform: rotate(0deg);
+  }
+  100% 
+  {
+	transform: rotate(360deg);
+  }
+}
+
+

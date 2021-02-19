@@ -37,6 +37,8 @@ public class RegistrationValidator implements Validator {
 				"Imie musi mieć minimum 3 litery");
 		this.validation("[a-zA-z0-9_!#$%&’*+/=?`{|}~^.-]{3,}", user.getName(), "Surname", errors, "err_code",
 				"Nazwisko musi mieć minimum 3 litery");
+		this.validation("^[\\w!#$%&'*+/=?`{|}~^-]+(?:\\.[\\w!#$%&'*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$", user.getEmail(), "email", errors, "err_code",
+				"nieprawidłowy adres mailowy");
 
 		if (!user.getPassword().equals(user.getPasswordConfirm())) {
 			errors.rejectValue("passwordConfirm", "err_code", "hasła muszą być zgodne");

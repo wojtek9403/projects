@@ -16,8 +16,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "Pictures")
-public class Picture implements Comparable<Picture>
-{
+public class Picture implements Comparable<Picture> {
 
 	@Id
 	Long id;
@@ -30,10 +29,9 @@ public class Picture implements Comparable<Picture>
 
 	@ManyToMany(mappedBy = "pictures")
 	Set<User> users = new HashSet<User>();
-	
-	@OneToMany(mappedBy="picture")
+
+	@OneToMany(mappedBy = "picture")
 	Set<Comments> myComments = new HashSet<Comments>();
-	
 
 	public Set<Comments> getMyComments() {
 		return myComments;
@@ -92,18 +90,14 @@ public class Picture implements Comparable<Picture>
 	@Override
 	public int compareTo(Picture o) {
 
-		if(o instanceof Picture)
-		{
-			if(this.getId() < o.getId())
-			{
+		if (o instanceof Picture) {
+			if (this.getId() < o.getId()) {
 				return -1;
-			}
-			else if(this.getId() > o.getId())
-			{
+			} else if (this.getId() > o.getId()) {
 				return 1;
-			}					
+			}
 		}
-		
+
 		return 0;
 	}
 

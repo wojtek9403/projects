@@ -26,19 +26,18 @@ import dbModelsnDAOs.User;
 import dbModelsnDAOs.UserRepository;
 import net.coobird.thumbnailator.Thumbnails;
 
-@Import({buisnessLogic.MainServicePerformerImpl.class})
+@Import({ buisnessLogic.MainServicePerformerImpl.class })
 @Controller
 public class UploadController {
-	
-	private MainServicePerformer MainServicePerformerImpl;
-	
-	private PictureRepository PictureRepository;
-	
-	private UserRepository UserRepository;
-		
 
-	public UploadController(MainServicePerformer mainServicePerformerImpl, dbModelsnDAOs.PictureRepository pictureRepository,
-			dbModelsnDAOs.UserRepository userRepository) {
+	private MainServicePerformer MainServicePerformerImpl;
+
+	private PictureRepository PictureRepository;
+
+	private UserRepository UserRepository;
+
+	public UploadController(MainServicePerformer mainServicePerformerImpl,
+			dbModelsnDAOs.PictureRepository pictureRepository, dbModelsnDAOs.UserRepository userRepository) {
 		super();
 		MainServicePerformerImpl = mainServicePerformerImpl;
 		PictureRepository = pictureRepository;
@@ -46,28 +45,25 @@ public class UploadController {
 	}
 
 	@GetMapping("/upload")
-	public String GetFileUpload(Model model, HttpSession sess, @RequestParam(defaultValue = "false") String error)
-	{
+	public String GetFileUpload(Model model, HttpSession sess, @RequestParam(defaultValue = "false") String error) {
 		User user = UserRepository.findById((String) sess.getAttribute("user")).get();
 		model.addAttribute("user", user);
 
-		if(user.getRole().equals("ROLE_ADMIN"))
-		{
+		if (user.getRole().equals("ROLE_ADMIN")) {
 			return "AdminMain";
 		}
-		
-		if(error.equals("true"))
-		{ 
+
+		if (error.equals("true")) {
 			model.addAttribute("err_message", "obsługujemy formaty : jpg, png, emf, bmp, tif !");
 		}
 		return "main";
 	}
-	
+
 	@PostMapping("/upload")
 	@Transactional
-	public String FileUpload(@RequestParam("file") MultipartFile file, String desc, HttpSession session, Model model) throws IllegalStateException, IOException
-	{
-		return  MainServicePerformerImpl.photoUploader(UserRepository, PictureRepository, file, desc, session, model);
+	public String FileUpload(@RequestParam("file") MultipartFile file, String desc, HttpSession session, Model model)
+			throws IllegalStateException, IOException {
+		return MainServicePerformerImpl.photoUploader(UserRepository, PictureRepository, file, desc, session, model);
 
 	}
 

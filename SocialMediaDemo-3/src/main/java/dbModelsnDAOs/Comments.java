@@ -9,17 +9,17 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "Comment")
-public class Comments  {
-	
+public class Comments {
+
 	@Id
 	@GeneratedValue
 	Long id;
-	
+
 	String tresc;
-	
+
 	@ManyToOne
 	User Comentator;
-	
+
 	@ManyToOne
 	Picture picture;
 

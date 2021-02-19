@@ -24,13 +24,12 @@ import dbModelsnDAOs.User;
 import dbModelsnDAOs.UserRepository;
 import net.coobird.thumbnailator.Thumbnails;
 
-@Import({buisnessLogic.MainServicePerformerImpl.class})
+@Import({ buisnessLogic.MainServicePerformerImpl.class })
 @Controller
 public class UploadProfile {
-	
-	
+
 	private MainServicePerformer MainServicePerformerImpl;
-	
+
 	private UserRepository userRepository;
 
 	public UploadProfile(MainServicePerformer mainServicePerformerImpl, UserRepository userRepository) {
@@ -40,30 +39,25 @@ public class UploadProfile {
 	}
 
 	@GetMapping("/uploadProfilePic")
-	public String GetFileUpload(Model model, HttpSession sess, @RequestParam(defaultValue = "false") String error)
-	{
+	public String GetFileUpload(Model model, HttpSession sess, @RequestParam(defaultValue = "false") String error) {
 		User user = userRepository.findById((String) sess.getAttribute("user")).get();
 		model.addAttribute("user", user);
 
-		if(error.equals("true"))
-		{ 
+		if (error.equals("true")) {
 			model.addAttribute("err_message", "obsługujemy formaty : jpg, png, emf, bmp, tif !");
 		}
 
-		if(user.getRole().equals("ROLE_ADMIN"))
-		{
+		if (user.getRole().equals("ROLE_ADMIN")) {
 			return "AdminProfilePic";
 		}
 
-		
 		return "profilePic";
 	}
-	
+
 	@PostMapping("/uploadProfilePic")
 	@Transactional
-	public String FileUpload(@RequestParam("file") MultipartFile file, HttpSession session, Model model) throws IllegalStateException, IOException
-	{		
+	public String FileUpload(@RequestParam("file") MultipartFile file, HttpSession session, Model model)
+			throws IllegalStateException, IOException {
 		return MainServicePerformerImpl.profilePicUploader(userRepository, file, session, model);
 	}
 }
- 

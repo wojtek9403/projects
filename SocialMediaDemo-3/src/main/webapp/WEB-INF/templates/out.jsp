@@ -9,7 +9,7 @@
 <title>Insert title here</title>
 <link href="/css/AdminMain.css" rel='stylesheet' type='text/css'>
 </head>
-<body>
+<body >
 
 	<div id="container" align="center">
 
@@ -55,6 +55,8 @@
 						href="/SocialMediaDemo/videoUpload">Dodaj film</a></li>
 						<li class="liBottom"><a class="buttonLi"
 						href="/SocialMediaDemo/user/friends">Obserwowani</a></li>
+						<li class="liBottom"><a class="buttonLi"
+						href="/SocialMediaDemo/table">Aktualności</a></li>
 				</ul>
 			</div>
 
@@ -145,6 +147,7 @@
             <div id="loader"> </div>
             <label>Loading</label>                   
         </div>
+        
 	
 	<script type="text/javascript">
 
@@ -181,6 +184,7 @@
 	{
 	    this.pause();
 	};
+	
 
 	</script>
 
