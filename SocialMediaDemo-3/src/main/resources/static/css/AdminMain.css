@@ -376,6 +376,15 @@ div.notifs div.list div.notifItem
 	overflow: auto;
 }
 
+.ajaxloader0
+{
+	display:block;
+	position:relative;
+	width: 100%;
+	height: 100%;
+}
+
+
 div.notifs:hover div.list
 {
     display: block;

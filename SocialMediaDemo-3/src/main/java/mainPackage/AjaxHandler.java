@@ -43,12 +43,17 @@ public class AjaxHandler {
 			session.setAttribute("q", newQ);
 			
 			list = PicDao.getNNpics(newP, newQ);
-			if(list.isEmpty()) return null;
-						
+			
+			if(list.isEmpty()) 
+			{	
+				List <String> Empty = new ArrayList<String>();
+				Empty.add(" ");
+				
+				return Empty;
+			}			
 		}
 		else
-		{
-			
+		{		
 			long p = PicDao.getPictureMaxId();
 			long q = PicDao.getPictureMaxId()-9;
 			

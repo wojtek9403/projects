@@ -95,7 +95,11 @@
 			
 
 			</div>
-
+			
+			<div class = "ajaxloader0">
+				<img alt='Loading ...' src='/images/ajax-loader.gif'></img>
+			</div>
+			
 		</div>
 
 
@@ -137,6 +141,7 @@
 	var j ;
 	var x ;
 	var doIhaveToAppend;
+	var z;
 //-----------------------------//
 	
 	
@@ -180,8 +185,9 @@
 	function ajaxInit(heather) { 
 		
 		 doIhaveToAppend = true;
-		 j = document.documentElement.scrollHeight - window.innerHeight - 0.000000001;;
-		 x = document.documentElement.scrollHeight - window.innerHeight - 0.000000001;;
+		 j = document.documentElement.scrollHeight - window.innerHeight;
+		 x = document.documentElement.scrollHeight - window.innerHeight;
+		 z = false;
 	
     var XHR = null;
 
@@ -208,9 +214,7 @@
         }
 
     }
-	
-	console.log("jest ajax");
-	
+		
     if(XHR!=null && doIhaveToAppend == true)
 	    {
 	        XHR.open("POST", "http://localhost:8080/PostHandler/give10posts", true);
@@ -222,15 +226,14 @@
 
 	            if(XHR.readyState == 1||XHR.readyState == 2||XHR.readyState == 3)
 	            {
-                	console.log("loading");
-
+	            	document.querySelector(".ajaxloader0").innerHTML = "<img alt='Loading ...' src='/images/ajax-loader.gif'></img>";
 	            }
 	            else if(XHR.readyState == 4)
 	            {
 	                if(XHR.status==200)
 	                {
-	                	if(XHR.responseText != "")
-	                	{
+	                	if(XHR.responseText !=" ")
+	                	{                		
 		                	var Lista = JSON.parse(XHR.responseText);
 		                	
 		                	for (x of Lista)
@@ -239,9 +242,11 @@
 							}
 		                	
 	               			 document.getElementById("posts").innerHTML = div;
+	     	            	 document.querySelector(".ajaxloader0").innerHTML = " ";
 	                	}
 	                	else
 	                	{
+	     	            	document.querySelector(".ajaxloader0").innerHTML = " ";
 	                		doIhaveToAppend = false;
 	                	}
 	                }
@@ -254,24 +259,29 @@
 	        XHR.send(null);
 	    }
     
+	 document.querySelector(".ajaxloader0").innerHTML = " ";
 }
 
 	
 	function onScrollAppend()
 	{			
-		x = document.documentElement.scrollHeight - window.innerHeight - 0.000000001;
+		x = document.documentElement.scrollHeight - window.innerHeight - 20;
 		
-		if(document.documentElement.scrollTop > x && document.documentElement.scrollTop > j)		
+		if(document.documentElement.scrollTop > x && document.documentElement.scrollTop > j)
 		{
+			z = true;
+		}
+		
+		if(document.documentElement.scrollTop > x && document.documentElement.scrollTop > j && z == true)		
+		{ 
 			ajaxInit("onScroll");
 			j = document.documentElement.scrollTop;
 		}
-	}
-
-	window.onscroll = function() 
-	{
-		onScrollAppend();	
+		
+		z = false;	
+		
 	};
+
 	
 
 	</script>
