@@ -100,8 +100,8 @@ function main(token) {
 
 	site = document.getElementsByTagName("title")[0];
 
-	var loader = document.querySelector(".preLoader");
-	loader.classList.add("disapear");
+	var loader = document.getElementsByClassName("preLoader");
+	loader[0].classList.add("disapear");
 
 
 	if (site.innerHTML == "News") {
@@ -116,19 +116,17 @@ function main(token) {
 			onScrollAppend(token);
 		});
 	}
-	video = document.querySelector("video");
-	video.onmouseover = function() {
-		video.setAttribute("autoplay", "true");
-	}
-	video.onmouseout = function() {
-		video.setAttribute("autoplay", "false");
-	}
-
-	videos = document.getElementsByClassName("videos");
-	[].forEach.call(videos, function(e) {
-		e.addEventListener('mouseover', hoverVideo, false);
-		e.addEventListener('mouseout', hideVideo, false);
-	});
+	
+	var videos = document.getElementsByClassName("videos");
+		
+		for(x of videos){
+			x.addEventListener("mouseover",function(){
+				this.play();
+			});
+			x.addEventListener("mouseout",function(){
+				this.pause();
+			});
+		}
 
 
 };

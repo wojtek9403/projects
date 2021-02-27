@@ -6,8 +6,9 @@ var site;
 window.onload = function(){
 	
 	site = document.getElementsByTagName("title")[0];
-	var loader = document.querySelector(".preLoader");
-	loader.classList.add("disapear");
+	
+	var loader = document.getElementsByClassName("preLoader");
+	loader[0].classList.add("disapear");
 
 
 	if (site.innerHTML == "Admin Main" || site.innerHTML =="AdminProfilePic" || site.innerHTML =="AdminVideoUpload" || site.innerHTML =="AddPhoto" || site.innerHTML =="AddProfilePicture" || site.innerHTML =="Upload Video" || site.innerHTML=="Delete your account") {	
