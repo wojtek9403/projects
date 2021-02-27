@@ -6,9 +6,9 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>Insert title here</title>
+<title>Delete your account</title>
 <link href="/css/AdminMain.css" rel='stylesheet' type='text/css'>
-
+<script type="text/javascript" src="/js/ordinaryJs.js" async = "true"></script>
 </head>
 <body>
 
@@ -82,7 +82,7 @@
 
 				<br />
 				<div class="sub">
-					<input type="submit" value="usuń" />
+					<input id="submitUploadButton" type="submit" value="usuń" />
 				</div>
 
 
@@ -122,5 +122,14 @@
 			</div>
 
 		</footer>
+		
+		<div class = "uploader" align="center">
+            <div id = "anim_upload"></div>
+        </div>
+        
+		<div class = "preLoader" align="center">
+            <div id="loader"> </div>
+            <label>Loading</label>                   
+        </div>
 </body>
 </html>

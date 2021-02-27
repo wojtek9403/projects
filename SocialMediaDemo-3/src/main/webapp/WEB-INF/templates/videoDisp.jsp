@@ -5,8 +5,9 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>Insert title here</title>
+<title>Video</title>
 <link href="/css/video.css" rel='stylesheet' type='text/css'>
+<script type="text/javascript" src="/js/ordinaryJs.js" async = "true"></script>
 </head>
 <body>
 
@@ -71,17 +72,5 @@
             <label>Loading</label>                   
         </div>
 
-<script type="text/javascript">
-
-	var loader = document.querySelector(".preLoader"); 
-	
-	window.addEventListener("load", vanish);
-
-	function vanish()
-	{
-	  	loader.classList.add("disapear");  
-	};
-
-</script>
 </body>
 </html>

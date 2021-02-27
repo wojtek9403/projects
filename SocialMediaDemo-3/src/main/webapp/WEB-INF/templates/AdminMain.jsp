@@ -6,10 +6,10 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>Insert title here</title>
+<title>Admin Main</title>
 
 <link href="/css/AdminMain.css" rel='stylesheet' type='text/css'>
-
+<script type="text/javascript" src="/js/ordinaryJs.js" async = "true"></script>
 </head>
 <body>
 
@@ -81,7 +81,7 @@
 					zdjęcia</label> <br />
 				<textarea name="desc" spellcheck="true" rows="5" cols="40"></textarea>
 				<input type="hidden" name="${_csrf.parameterName}"
-					value="${_csrf.token}" /> <br /> <br /> <input class="sub"
+					value="${_csrf.token}" /> <br /> <br /> <input id="submitUploadButton" class="sub"
 					type="submit">
 			</form>
 			<br />

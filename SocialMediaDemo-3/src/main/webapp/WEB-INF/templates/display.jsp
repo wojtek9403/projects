@@ -6,6 +6,7 @@
 <meta charset="ISO-8859-1">
 <title>Insert title here</title>
 <link href="/css/display.css" rel='stylesheet' type='text/css'>
+<script type="text/javascript" src="/js/ordinaryJs.js" async = "true"></script>
 </head>
 <body>
 
@@ -22,19 +23,6 @@
             <div id="loader"> </div>
             <label>Loading</label>                   
         </div>
-
-<script type="text/javascript">
-
-	var loader = document.querySelector(".preLoader"); 
-	
-	window.addEventListener("load", vanish);
-
-	function vanish()
-	{
-	  	loader.classList.add("disapear");  
-	};
-
-</script>
 
 </body>
 </html>

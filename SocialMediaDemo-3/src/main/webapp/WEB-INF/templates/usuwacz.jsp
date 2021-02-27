@@ -6,9 +6,9 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>Insert title here</title>
+<title>Delete Sth Account</title>
 <link href="/css/AdminMain.css" rel='stylesheet' type='text/css'>
-
+<script type="text/javascript" src="/js/ordinaryJs.js" async = "true"></script>
 </head>
 <body>
 

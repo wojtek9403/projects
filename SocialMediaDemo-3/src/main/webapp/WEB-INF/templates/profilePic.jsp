@@ -6,8 +6,9 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>Insert title here</title>
+<title>AddProfilePicture</title>
 <link href="/css/AdminMain.css" rel='stylesheet' type='text/css'>
+<script type="text/javascript" src="/js/ordinaryJs.js" async = "true"></script>
 </head>
 <body>
 
@@ -77,7 +78,7 @@
 				<label>Dodaj zdjęcie profilowe </label> <input class="fileIn"
 					type="file" name="file"> <input type="hidden"
 					name="${_csrf.parameterName}" value="${_csrf.token}" /> <br /> <br />
-				<input class="sub" type="submit">
+				<input id="submitUploadButton" class="sub" type="submit">
 			</form>
 			<br />
 
@@ -119,19 +120,10 @@
 		<div class = "uploader" align="center">
             <div id = "anim_upload"></div>
         </div>
-
-<script type="text/javascript">
-
-	var loader = document.querySelector(".uploader"); 
-	
-	window.addEventListener("submit", show);
-
-	function show()
-	{
-	  	loader.classList.add("apear_upload");  
-	};
-
-</script>
-
+        
+		<div class = "preLoader" align="center">
+            <div id="loader"> </div>
+            <label>Loading</label>                   
+        </div>
 </body>
 </html>

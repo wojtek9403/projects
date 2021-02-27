@@ -6,8 +6,9 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>Insert title here</title>
+<title>AdminVideoUpload</title>
 <link href="/css/AdminMain.css" rel='stylesheet' type='text/css'>
+<script type="text/javascript" src="/js/ordinaryJs.js" async = "true"></script>
 </head>
 <body>
 
@@ -77,7 +78,7 @@
 					zdjęcia</label> <br />
 				<textarea name="desc" spellcheck="true" rows="5" cols="40"></textarea>
 				<input type="hidden" name="${_csrf.parameterName}"
-					value="${_csrf.token}" /> <br /> <br /> <input class="sub"
+					value="${_csrf.token}" /> <br /> <br /> <input id="submitUploadButton" class="sub"
 					type="submit">
 			</form>
 			<br />
@@ -122,17 +123,6 @@
             <label>Loading ... </label>        
         </div>
 
-<script type="text/javascript">
 
-	var loader = document.querySelector(".uploader"); 
-	
-	window.addEventListener("submit", show);
-
-	function show()
-	{
-	  	loader.classList.add("apear_upload");  
-	};
-
-</script>
 </body>
 </html>

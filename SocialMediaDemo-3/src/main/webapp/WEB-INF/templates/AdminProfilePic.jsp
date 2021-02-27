@@ -6,8 +6,10 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>Insert title here</title>
+<title>AdminProfilePic</title>
 <link href="/css/AdminMain.css" rel='stylesheet' type='text/css'>
+<script type="text/javascript" src="/js/ordinaryJs.js" async = "true"></script>
+
 </head>
 <body>
 
@@ -73,17 +75,13 @@
 
 		<div id="formContainer" align="center">
 
-			<!-- action="/upload?${_csrf.parameterName}=${_csrf.token}" pozwala na wysłanie na server ja ktorym dziła security takiego tokena
-		dzieki ktoremu security pozwoli na wykonanie zapytania - po to jest ten csrf.token -->
-
-
-			<!-- aby uwierzytelnienie tokenam zadziałło przed$ musi byc adres posta i za nim "?" - tu /uploadProfilePic   -->
+		
 			<form method="post" action="/uploadProfilePic"
 				enctype="multipart/form-data">
 				<label>Dodaj zdjęcie profilowe </label> <input class="fileIn"
 					type="file" name="file"> <input type="hidden"
 					name="${_csrf.parameterName}" value="${_csrf.token}" /> <br /> <br />
-				<input class="sub" type="submit">
+				<input id="submitUploadButton" class="sub" type="submit">
 			</form>
 			<br />
 
@@ -124,18 +122,5 @@
 		<div class = "uploader" align="center">
             <div class = "anim_upload"></div>
         </div>
-
-<script type="text/javascript">
-
-	var loader = document.querySelector(".uploader"); 
-	
-	window.addEventListener("submit", show);
-
-	function show()
-	{
-	  	loader.classList.add("apear_upload");  
-	};
-
-</script>
 </body>
 </html>

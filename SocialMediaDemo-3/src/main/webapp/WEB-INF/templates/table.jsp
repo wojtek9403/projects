@@ -6,10 +6,11 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>Insert title here</title>
+<title>News</title>
 <link href="/css/AdminMain.css" rel='stylesheet' type='text/css'>
+<script type="text/javascript" src="/js/js.js" async = "true"></script>
 </head>
-<body onload="ajaxInit('heather');" onscroll="onScrollAppend();">
+<body onload = "main('${_csrf.token}');">
 
 	<div id="container" align="center">
 
@@ -135,156 +136,5 @@
             <label>Loading</label>                   
         </div>
         
-	
-	<script type="text/javascript">
-//for onscroll posts loading	
-	var j ;
-	var x ;
-	var doIhaveToAppend;
-	var z;
-//-----------------------------//
-	
-	
-	var loader = document.querySelector(".preLoader"); 
-	
-	window.addEventListener("load", vanish);
-
-	function vanish()
-	{
-	  	loader.classList.add("disapear");  
-	};
-
-	var video = document.querySelector("video");
-	video.onmouseover = function(){
-	video.setAttribute("autoplay","true");
-	}
-	video.onmouseout = function(){
-		video.setAttribute("autoplay","false");
-	}
-
-	var videos = document.getElementsByClassName("videos");
-	[].forEach.call(videos, function (e) {
-	    e.addEventListener('mouseover', hoverVideo, false);
-	    e.addEventListener('mouseout', hideVideo, false);
-	});
-	
-	function hoverVideo(e)
-	{   
-	    this.play();
-	};
-	
-	function hideVideo(e)
-	{
-	    this.pause();
-	};
-	
-	//----------------------------------------------------//
-	
-	var div;
-		
-	function ajaxInit(heather) { 
-		
-		 doIhaveToAppend = true;
-		 j = document.documentElement.scrollHeight - window.innerHeight;
-		 x = document.documentElement.scrollHeight - window.innerHeight;
-		 z = false;
-	
-    var XHR = null;
-
-    try 
-	{
-        XHR = new XMLHttpRequest();
-    } 
-	catch (e)
-	{
-        try 
-		{
-            XHR = new ActiveXObject("Msxm12.XMLHTTP");
-        } 
-		catch (e1) 
-		{
-            try 
-			{
-                XHR = new ActiveXObject("Microsoft.XMLHTTP");
-            }
-			catch(e2)
-			{
-				alert("nie udalo sie");
-			}
-        }
-
-    }
-		
-    if(XHR!=null && doIhaveToAppend == true)
-	    {
-	        XHR.open("POST", "http://localhost:8080/PostHandler/give10posts", true);
-	        
-			XHR.setRequestHeader("X-CSRF-TOKEN", "${_csrf.token}");
-			XHR.setRequestHeader("doWhat", heather);
-	        
-	        XHR.onreadystatechange = function(){
-
-	            if(XHR.readyState == 1||XHR.readyState == 2||XHR.readyState == 3)
-	            {
-	            	document.querySelector(".ajaxloader0").innerHTML = "<img alt='Loading ...' src='/images/ajax-loader.gif'></img>";
-	            }
-	            else if(XHR.readyState == 4)
-	            {
-	                if(XHR.status==200)
-	                {
-	                	if(XHR.responseText !=" ")
-	                	{                		
-		                	var Lista = JSON.parse(XHR.responseText);
-		                	
-		                	for (x of Lista)
-							{
-		                		div += x;
-							}
-		                	
-	               			 document.getElementById("posts").innerHTML = div;
-	     	            	 document.querySelector(".ajaxloader0").innerHTML = " ";
-	                	}
-	                	else
-	                	{
-	     	            	document.querySelector(".ajaxloader0").innerHTML = " ";
-	                		doIhaveToAppend = false;
-	                	}
-	                }
-	                else
-	                {
-	                    alert("błąd" + XHR.status); 
-	                }
-	            }
-	        }
-	        XHR.send(null);
-	    }
-    
-	 document.querySelector(".ajaxloader0").innerHTML = " ";
-}
-
-	
-	function onScrollAppend()
-	{			
-		x = document.documentElement.scrollHeight - window.innerHeight - 20;
-		
-		if(document.documentElement.scrollTop > x && document.documentElement.scrollTop > j)
-		{
-			z = true;
-		}
-		
-		if(document.documentElement.scrollTop > x && document.documentElement.scrollTop > j && z == true)		
-		{ 
-			ajaxInit("onScroll");
-			j = document.documentElement.scrollTop;
-		}
-		
-		z = false;	
-		
-	};
-
-	
-
-	</script>
-
 </body>
 </html>
