@@ -1,6 +1,6 @@
 jasypt:
     encryptor:
-        password: dbpass
+        password: XXX
 
         
         
