@@ -68,10 +68,22 @@ public class AjaxHandler {
 		{
 			dbModelsnDAOs.User owner = x.getUsers().iterator().next();
 			
-			posts.add("<div class='post'><div class='who'><img id='imgMin' src=" +"/userImg/"+owner.getProfilePicture()+ "/><a id='naglowek' href="+"/SocialMediaDemo/users/profile/"+owner.getUsername()+">"+ owner.getUsername()+"</a></div>" 
-				+ "<div id='postContent'>"
-				+ "<img id='contentPic' src=" + "/userImg/" + x.getOrginalPicPath() +"/><p>"+ x.getDescription()+ "</p>"
-				+ "</div></div>");
+			if(x.getOrginalPicPath().endsWith(".mp4")) 
+			{
+				posts.add( "<div class='post'><div class='who'><img id='imgMin' src=" +"/userImg/"+owner.getProfilePicture()+ "/><a id='naglowek' href="+"/SocialMediaDemo/users/profile/"+owner.getUsername()+">"+ owner.getUsername()+"</a></div>"
+						 + "<div id='postContent'>"
+						 + "<video class='videos' id='video' muted='true' height='500px' width='700px'>"
+						 + "<source src='/userImg/"+ x.getOrginalPicPath() + "#t=0.5' type ='video/mp4' /></video>"
+						 + "</div></div>"
+						);
+			}
+			else 
+			{
+				posts.add("<div class='post'><div class='who'><img id='imgMin' src=" +"/userImg/"+owner.getProfilePicture()+ "/><a id='naglowek' href="+"/SocialMediaDemo/users/profile/"+owner.getUsername()+">"+ owner.getUsername()+"</a></div>" 
+					+ "<div id='postContent'>"
+					+ "<img id='contentPic' src=" + "/userImg/" + x.getOrginalPicPath() +"/><p>"+ x.getDescription()+ "</p>"
+					+ "</div></div>");
+			}
 		}
 		
 		return posts;

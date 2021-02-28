@@ -54,10 +54,25 @@ function loadPosts(heather, token) {
 						var Lista = JSON.parse(XHR.responseText);
 
 						for (x of Lista) {
-							div += x;
+							div += x;						
 						}
 
 						document.getElementById("posts").innerHTML = div;
+						
+						var videos = document.getElementsByClassName("videos");		
+						for(x of videos){
+							
+							x.addEventListener("mouseover",function(){
+								this.play();
+								this.controls = "true";
+							});
+													
+							x.addEventListener("mouseout",function(){
+								this.pause();
+								this.removeAttribute("controls");
+							});
+						}
+
 						document.querySelector(".ajaxloader0").innerHTML = " ";
 					}
 					else {
@@ -103,8 +118,6 @@ function main(token) {
 	var loader = document.getElementsByClassName("preLoader");
 	loader[0].classList.add("disapear");
 
-
-	if (site.innerHTML == "News") {
 		doIhaveToAppend = true;
 		j = document.documentElement.scrollHeight - window.innerHeight;
 		x = document.documentElement.scrollHeight - window.innerHeight;
@@ -115,18 +128,5 @@ function main(token) {
 		window.addEventListener("scroll", function() {
 			onScrollAppend(token);
 		});
-	}
-	
-	var videos = document.getElementsByClassName("videos");
-		
-		for(x of videos){
-			x.addEventListener("mouseover",function(){
-				this.play();
-			});
-			x.addEventListener("mouseout",function(){
-				this.pause();
-			});
-		}
-
 
 };

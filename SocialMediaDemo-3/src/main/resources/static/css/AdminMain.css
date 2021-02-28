@@ -370,7 +370,11 @@ div.notifs div.list div.notifItem
     
     
 }
-
+.videos{
+	outline-style: none;
+	box-shadow: none;
+	border-color: transparent;
+}
 #posts
 {
 	overflow: auto;
