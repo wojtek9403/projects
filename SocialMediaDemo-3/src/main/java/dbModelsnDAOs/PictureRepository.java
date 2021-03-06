@@ -11,7 +11,9 @@ public interface PictureRepository extends JpaRepository<Picture, Long> {
 	@Query("SELECT MAX(p.id) FROM Picture p")
 	long getPictureMaxId();
 
-	Picture findByorginalPicPath(String orginalPicPath);
+	
+	@Query("SELECT p FROM Picture p WHERE p.minPicPath = :param")
+	Picture findByminPicPath(@Param("param") String minPicPath);
 	
 	@Query("SELECT p FROM Picture p WHERE p.id > 0")
 	List<Picture> getAll();

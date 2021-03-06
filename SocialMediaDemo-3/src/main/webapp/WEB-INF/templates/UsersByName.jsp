@@ -59,7 +59,7 @@
 
 			<a class="profileLink" href="/uploadProfilePic">
 				<div class="profilowe">
-					<img alt="upload profile pic" src="/userImg/${user.profilePicture}">
+					<img alt="upload profile pic" src="/${user.profilePicture}">
 				</div>
 			</a>
 
@@ -84,7 +84,7 @@
 			<div id="profileContainer">
 						<br/>
 				<a id="xx" href="/SocialMediaDemo/users/profile/${user.username}"><img class = "picTable"
-						src="/userImg/${user.profilePicture}"></img></a>
+						src="/${user.profilePicture}"></img></a>
 						<br/>
 						<label>${user.name} ${user.surname}</label>
 						<br/>

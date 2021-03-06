@@ -57,7 +57,7 @@
 
 			<a class="profileLink" href="/uploadProfilePic">
 				<div class="profilowe">
-					<img alt="upload profile pic" src="/userImg/${user.profilePicture}">
+					<img alt="upload profile pic" src="/${user.profilePicture}">
 				</div>
 			</a>
 

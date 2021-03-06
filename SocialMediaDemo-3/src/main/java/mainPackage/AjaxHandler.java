@@ -70,18 +70,22 @@ public class AjaxHandler {
 			
 			if(x.getOrginalPicPath().endsWith(".mp4")) 
 			{
-				posts.add( "<div class='post'><div class='who'><img id='imgMin' src=" +"/userImg/"+owner.getProfilePicture()+ "/><a id='naglowek' href="+"/SocialMediaDemo/users/profile/"+owner.getUsername()+">"+ owner.getUsername()+"</a></div>"
+				posts.add( "<div class='post'><div class='who'><a id='naglowek' href="+"/SocialMediaDemo/users/profile/"+owner.getUsername()+">"+"<img id='imgMin' src=" +"/"+owner.getProfilePicture()+"/>"+"</a></div>"
+						 + "<div class = 'whoName'><label>"+ owner.getUsername()+"</label></div>"
 						 + "<div id='postContent'>"
+						 + "<pre>" + x.getDescription() + "</pre>"
 						 + "<video class='videos' id='video' muted='true' height='500px' width='700px'>"
-						 + "<source src='/userImg/"+ x.getOrginalPicPath() + "#t=0.5' type ='video/mp4' /></video>"
+						 + "<source src='/"+ x.getOrginalPicPath() + "#t=0.5' type ='video/mp4' /></video>"
 						 + "</div></div>"
 						);
 			}
 			else 
 			{
-				posts.add("<div class='post'><div class='who'><img id='imgMin' src=" +"/userImg/"+owner.getProfilePicture()+ "/><a id='naglowek' href="+"/SocialMediaDemo/users/profile/"+owner.getUsername()+">"+ owner.getUsername()+"</a></div>" 
+				posts.add("<div class='post'><div class='who'><a id='naglowek' href="+"/SocialMediaDemo/users/profile/"+owner.getUsername()+">"+"<img id='imgMin' src=" +"/"+owner.getProfilePicture()+"/>"+"</a></div>"
+					+ "<div class = 'whoName'><label>"+ owner.getUsername()+"</label></div>"
 					+ "<div id='postContent'>"
-					+ "<img id='contentPic' src=" + "/userImg/" + x.getOrginalPicPath() +"/><p>"+ x.getDescription()+ "</p>"
+					+ "<pre>" + x.getDescription() + "</pre>"
+					+ "<img id='contentPic' src=" + "/" + x.getOrginalPicPath() +"/>"
 					+ "</div></div>");
 			}
 		}

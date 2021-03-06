@@ -13,7 +13,7 @@
 	<div id="container" align="left">
 		<div id="container2" align="center">
 
-			<img id="disp" alt="xx" src="/userImg/${photo}">
+			<img id="disp" alt="xx" src="/${photo}">
 			<p id="opis">${desc}</p>
 
 		</div>

@@ -395,6 +395,39 @@ div.notifs:hover div.list
     z-index: 1000;
 
 }
+
+div.post
+{
+	margin-bottom: 12px;
+	padding-top: 8px;
+	background-color: #f2f2f2;
+		
+}
+div.who
+{
+	position:relative; 
+	float:left;
+}
+div.post pre{
+	position:relative; 
+	float:left;
+	min-width: 100%;
+}
+#naglowek{
+	position: relative;
+	top:0px;
+	min-width: 100%;
+}
+div.whoName{
+	position: relative;
+	float: left;
+	min-width: 100%;
+}
+div.whoName label {
+	position: relative;
+	float: left;
+}
+
                 .preLoader
                 {
                     position: fixed;

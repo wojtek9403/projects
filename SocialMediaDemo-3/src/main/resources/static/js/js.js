@@ -3,7 +3,6 @@ var x;
 var doIhaveToAppend;
 var z;
 var XHR;
-var div;
 var video;
 var videos;
 //-----------------------------//
@@ -39,14 +38,14 @@ function loadPosts(heather, token) {
 
 	var XHR = initXHR();
 
-	if (XHR != null && doIhaveToAppend == true) {
+	if (XHR != null) {
 		XHR.open("POST", "http://localhost:8080/PostHandler/give10posts", true);
 		XHR.setRequestHeader("X-CSRF-TOKEN", token);
 		XHR.setRequestHeader("doWhat", heather);
 		XHR.onreadystatechange = function() {
 
 			if (XHR.readyState == 1 || XHR.readyState == 2 || XHR.readyState == 3) {
-				document.querySelector(".ajaxloader0").innerHTML = "<img alt='Loading ...' src='/images/ajax-loader.gif'></img>";
+				document.getElementsByClassName("ajaxloader0")[0].innerHTML = "<img alt='Loading ...' src='/images/ajax-loader.gif'></img>";
 			}
 			else if (XHR.readyState == 4) {
 				if (XHR.status == 200) {
@@ -54,10 +53,8 @@ function loadPosts(heather, token) {
 						var Lista = JSON.parse(XHR.responseText);
 
 						for (x of Lista) {
-							div += x;						
+							document.getElementById("posts").innerHTML += x;			
 						}
-
-						document.getElementById("posts").innerHTML = div;
 						
 						var videos = document.getElementsByClassName("videos");		
 						for(x of videos){
@@ -73,10 +70,10 @@ function loadPosts(heather, token) {
 							});
 						}
 
-						document.querySelector(".ajaxloader0").innerHTML = " ";
+						document.getElementsByClassName("ajaxloader0")[0].innerHTML =  " ";
 					}
 					else {
-						document.querySelector(".ajaxloader0").innerHTML = " ";
+						document.getElementsByClassName("ajaxloader0")[0].innerHTML = " ";
 						doIhaveToAppend = false;
 					}
 				}
@@ -88,27 +85,19 @@ function loadPosts(heather, token) {
 		XHR.send(null);
 	}
 
-	document.querySelector(".ajaxloader0").innerHTML = " ";
+	document.getElementsByClassName("ajaxloader0")[0].innerHTML = " ";
 }
 
-function onScrollAppend(token) {
+function onScrollAppend(token, doIhaveToAppend) {
 	x = document.documentElement.scrollHeight - window.innerHeight - 20;
 
-	if (document.documentElement.scrollTop > x && document.documentElement.scrollTop > j) {
+	if (document.documentElement.scrollTop > x && document.documentElement.scrollTop > j && doIhaveToAppend == true) {
 		loadPosts("onScroll", token);
 		j = document.documentElement.scrollTop;
 	}
 
 };
 
-
-function hoverVideo() {
-	this.play();
-};
-
-function hideVideo() {
-	this.pause();
-};
 
 //mian
 function main(token) {
@@ -126,7 +115,7 @@ function main(token) {
 		loadPosts("heather", token);
 
 		window.addEventListener("scroll", function() {
-			onScrollAppend(token);
+			onScrollAppend(token, doIhaveToAppend);
 		});
 
 };

@@ -59,7 +59,7 @@
 
 			
 				<div class="profilowe">
-					<img alt="upload profile pic" src="/userImg/${userDetails.profilePicture}">
+					<img alt="upload profile pic" src="/${userDetails.profilePicture}">
 				</div>
 			
 
@@ -89,7 +89,7 @@
 				<c:forEach var="path" items="${paths}">
 
 					<a id="xx" href="/SocialMediaDemo/out/${path.orginalPicPath}"><img class = "picTable"
-						src="/userImg/${path.orginalPicPath}"></img></a>
+						src="/${path.orginalPicPath}"></img></a>
 
 				</c:forEach>
 
@@ -102,7 +102,7 @@
 					id = "video" preload = "metadata" 
 					height="200px" width="300px" muted="true" loop="true"
 					poster="" class="videos"
-						><source src="/userImg/${videoPath.orginalPicPath}#t=0.5" type = "video/mp4" /></video></a>
+						><source src="/${videoPath.orginalPicPath}#t=0.5" type = "video/mp4" /></video></a>
 				</c:forEach>
 
 			</div>

@@ -18,7 +18,7 @@ public interface MainServicePerformer {
 	public String performAdminView(UserRepository UserRepository, Model model, HttpSession session,
 			MulitComparator MulitComparator);
 
-	public String performPhotoView(Model model, String photoName);
+	public String performPhotoView(PictureRepository PictureRepository, Model model, String userImg, String upDir, String mainDir, String pic, String name);
 
 	public String delete(UserRepository UserRepository, PictureRepository PictureRepository, String zgoda,
 			HttpSession session, Model model);
@@ -32,7 +32,7 @@ public interface MainServicePerformer {
 	String videoUploader(UserRepository userRepository, PictureRepository PictureRepository, MultipartFile file,
 			String desc, HttpSession session, Model model);
 
-	String performVideoView(PictureRepository PictureRepository, Model model, String videoName,
+	String performVideoView(PictureRepository PictureRepository, Model model, String userImg, String upDir, String mainDir, String vids, String name,
 			MulitComparator MulitComparator);
 
 	String UsersSearcher(UserRepository UserRepository, Model model, String userToFindName,
@@ -41,7 +41,7 @@ public interface MainServicePerformer {
 	public String performUserView(UserRepository UserRepository, Model model, String usersFoundName,
 			HttpSession session, MulitComparator MulitComparator);
 
-	public String performPostView(PictureRepository PictureRepository, Model model, String photoName,
+	public String performPostView(PictureRepository PictureRepository, Model model, String userImg, String upDir, String mainDir, String pic, String name,
 			MulitComparator MulitComparator);
 
 	String photoUploader(UserRepository userRepository, PictureRepository PictureRepository, MultipartFile file,

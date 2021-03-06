@@ -128,26 +128,29 @@ public class MainServicePerformerImpl implements MainServicePerformer {
 	}
 
 	@Override
-	public String performPhotoView(Model model, String photoName) {
+	public String performPhotoView(PictureRepository PictureRepository, Model model, String userImg, String upDir, String mainDir, String pic, String name) {
 
-		model.addAttribute("photo", photoName);
+		String path = userImg +"/"+ upDir +"/"+ mainDir +"/"+ pic +"/"+ name;
+		
+		model.addAttribute("photo", path);
 
 		return "display";
 	}
 
 	@Override
-	public String performPostView(PictureRepository PictureRepository, Model model, String photoName,
-			MulitComparator MulitComparator) {
+	public String performPostView(PictureRepository PictureRepository, Model model, String userImg, String upDir, String mainDir, String pic, String name,
+			MulitComparator MulitComparator) {		
+		
+		//w zmiennej w uri musi byc string bez separatorów inaczej wszystko pomiedzy sepami to dla niego inna zmienna :<
+		// musisz wiec przekazywać w linkach nazwę zasobu nie path :<
+		Picture picObj = PictureRepository.findByminPicPath(name);
 
-		Picture pic = PictureRepository.findByorginalPicPath(photoName);
-
-		List<Comments> com = new ArrayList<Comments>(pic.getMyComments());
+		List<Comments> com = new ArrayList<Comments>(picObj.getMyComments());
 
 		com.sort(MulitComparator);
 
-		model.addAttribute("photo", pic);
+		model.addAttribute("photo", picObj);
 		model.addAttribute("comments", com);
-
 		return "photoView";
 	}
 
@@ -232,7 +235,8 @@ public class MainServicePerformerImpl implements MainServicePerformer {
 
 				UUID uuid = UUID.randomUUID();
 				byte[] bytes = file.getBytes();
-				String newFilename = "userImg/" + uuid.toString() + format;
+				//zmiana sciezki przy tworzeniu zasobu
+				String newFilename = "userImg/" + session.getAttribute("user").toString().charAt(0) + "/" + session.getAttribute("user").toString() +"/pic/" + uuid.toString() + format;
 				File ThFile = new File(newFilename);
 				ThFile.createNewFile();
 
@@ -254,13 +258,13 @@ public class MainServicePerformerImpl implements MainServicePerformer {
 					newPic.setId((long) 0);
 				}
 
-				newPic.setOrginalPicPath(ThFile.getName());
+				//zmiana sciezki do zasobu i ustawienie nazwy jako min path
+				newPic.setOrginalPicPath(ThFile.getPath());
+				newPic.setMinPicPath(uuid.toString() + format);
 				newPic.setDescription(desc);
 				PictureRepository.saveAndFlush(newPic);
 
 				String userName = (String) session.getAttribute("user");
-				System.err.println("user z sesji to :" + userName);
-
 				User userZbazy = userRepository.findById(userName).get();
 
 				userZbazy.getPictures().add(newPic);
@@ -273,7 +277,7 @@ public class MainServicePerformerImpl implements MainServicePerformer {
 					User owner = userRepository.findById(x).get();
 
 					userZbazy.notify(userZbazy.getUsername(), userZbazy.getName(), x, " dodał(a) ", owner,
-							NotifyRepository, " zdjęcie ", ThFile.getName());
+							NotifyRepository, " zdjęcie ", newPic.getOrginalPicPath()); // w powiadomieniach zostawiamy narazie nazwe pliku
 				}
 
 			} catch (Exception e) {
@@ -313,7 +317,7 @@ public class MainServicePerformerImpl implements MainServicePerformer {
 				UUID uuid = UUID.randomUUID();
 
 				byte[] bytes = file.getBytes();
-				String newFilename = "userImg/" + "profilePic" + uuid.toString() + format;
+				String newFilename = "userImg/" + session.getAttribute("user").toString().charAt(0) +"/"+ session.getAttribute("user").toString()+ "/pic/"+ uuid.toString() + format;
 				File ThFile = new File(newFilename);
 				ThFile.createNewFile();
 
@@ -321,7 +325,7 @@ public class MainServicePerformerImpl implements MainServicePerformer {
 
 				Thumbnails.of(originalImage).size(150, 150).toFile(ThFile);
 
-				userZbazy0.setProfilePicture(ThFile.getName());
+				userZbazy0.setProfilePicture(ThFile.getPath());
 				userRepository.save(userZbazy0);
 
 			} catch (Exception e) {
@@ -406,7 +410,7 @@ public class MainServicePerformerImpl implements MainServicePerformer {
 					return "redirect:/SocialMediaDemo/videoUpload?error=true";
 				}
 
-				String newFilename = "userImg/" + uuid.toString() + format;
+				String newFilename = "userImg/" + session.getAttribute("user").toString().charAt(0) + "/" + session.getAttribute("user").toString() +"/vids/" + uuid.toString() + format;
 				File ThFile = new File(newFilename);
 				ThFile.createNewFile();
 
@@ -417,7 +421,6 @@ public class MainServicePerformerImpl implements MainServicePerformer {
 				FileOutputStream out1 = new FileOutputStream(ThFile);
 
 				try {
-
 					byte[] bytes = new byte[buffer];
 
 					while (in.available() != 0) {
@@ -450,7 +453,8 @@ public class MainServicePerformerImpl implements MainServicePerformer {
 					newPic.setId((long) 0);
 				}
 
-				newPic.setOrginalPicPath(ThFile.getName());
+				newPic.setOrginalPicPath(ThFile.getPath());
+				newPic.setMinPicPath(uuid.toString() + format);
 				newPic.setDescription(desc);
 				PictureRepository.saveAndFlush(newPic);
 
@@ -466,7 +470,7 @@ public class MainServicePerformerImpl implements MainServicePerformer {
 					User owner = userRepository.findById(x).get();
 
 					userZbazy.notify(userZbazy.getUsername(), userZbazy.getName(), x, " dodał(a) ", owner,
-							NotifyRepository, " film ", "videos/" + ThFile.getName());
+							NotifyRepository, " film ", "videos/" + newPic.getOrginalPicPath());
 				}
 
 			} catch (Exception e) {
@@ -481,10 +485,10 @@ public class MainServicePerformerImpl implements MainServicePerformer {
 	}
 
 	@Override
-	public String performVideoView(PictureRepository PictureRepository, Model model, String videoName,
+	public String performVideoView(PictureRepository PictureRepository, Model model, String userImg, String upDir, String mainDir, String vids, String name,
 			MulitComparator MulitComparator) {
 
-		Picture pic = PictureRepository.findByorginalPicPath(videoName);
+		Picture pic = PictureRepository.findByminPicPath(name);
 
 		List<Comments> com = new ArrayList<Comments>(pic.getMyComments());
 
@@ -625,9 +629,10 @@ public class MainServicePerformerImpl implements MainServicePerformer {
 
 		return "iFollow";
 	}
-
+//do zrobienia
 	public String comentPhoto(HttpSession session, String tresc, String pic, CommentsRepository CommentsRepository,
 			UserRepository UserRepository, PictureRepository PictureRepository) {
+		
 		Picture picture = PictureRepository.findById(Long.parseLong(pic)).get();
 		User user = UserRepository.findById((String) session.getAttribute("user")).get(); 																					// (niekoniecznie wlascicel)
 
@@ -640,10 +645,11 @@ public class MainServicePerformerImpl implements MainServicePerformer {
 		User owner = picture.getUsers().iterator().next();
 
 		if (picture.getOrginalPicPath().endsWith(".mp4")) {
-			System.err.println("mp4");
 			user.notify(user.getUsername(), user.getName(), owner.getUsername(), " skomentował(a) ", owner,
-					NotifyRepository, " film ", "videos/" + picture.getOrginalPicPath());
+					NotifyRepository, " film ", "videos/"+ picture.getOrginalPicPath());
+			
 			return "redirect:/SocialMediaDemo/out/videos/" + picture.getOrginalPicPath();
+			
 		} else {
 			user.notify(user.getUsername(), user.getName(), owner.getUsername(), " skomentował(a) ", owner,
 					NotifyRepository, " zdjęcie ", picture.getOrginalPicPath());

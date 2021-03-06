@@ -1,5 +1,6 @@
 package mainPackage;
 
+import java.io.File;
 import java.io.IOException;
 
 import javax.servlet.http.HttpSession;
@@ -92,20 +93,38 @@ public class UserController {
 
 		userService.save(userForm);
 		
-	try {
-		Context context = new Context();
-		context.setVariable("header", "Witaj "+ userForm.getName());
-		context.setVariable("title", "Dziękujemy za zarejestrowanie się w serwisie");
-		context.setVariable("description", "W przyszłości proces ten posłuży do dwuetapowego logowania. Tymczasem "
-				+ "dziękujemy za review tej aplikacji, twój poświęcony czas pozwoli nam dopracować aplikację !"
-				+ " Pozdrawiam serdecznie !");		
-		String body = templateEngine.process("template.html", context);		
-		emailSenderImpl.sendEmail(userForm.getEmail(), "SocialMediaDemo.pl", body);
-	}catch (Exception e) {
-		System.err.println("nie udało się wysłać wiadomości powitalnej - sprawdz poprawność adresu @ lub wyłącz lokalny antywirus i spróbuj ponownie");
-	}
+		try {
+			Context context = new Context();
+			context.setVariable("header", "Witaj "+ userForm.getName());
+			context.setVariable("title", "Dziękujemy za zarejestrowanie się w serwisie");
+			context.setVariable("description", "W przyszłości proces ten posłuży do dwuetapowego logowania. Tymczasem "
+					+ "dziękujemy za review tej aplikacji, twój poświęcony czas pozwoli nam dopracować aplikację !"
+					+ " Pozdrawiam serdecznie !");		
+			String body = templateEngine.process("template.html", context);		
+			emailSenderImpl.sendEmail(userForm.getEmail(), "SocialMediaDemo.pl", body);
+		}catch (Exception e) {
+			System.err.println("nie udało się wysłać wiadomości powitalnej - sprawdz poprawność adresu @ lub wyłącz lokalny antywirus i spróbuj ponownie");
+		}
 	
 		securityService.autoLogin(userForm.getUsername(), orgPass); 
+		
+		File node = new File("userImg/"+userForm.getUsername().charAt(0));
+		if (!node.exists()){
+		    node.mkdir();
+		}
+		
+		File userResource = new File("userImg/"+userForm.getUsername().charAt(0)+ "/" + userForm.getUsername());
+		if (!userResource.exists()){
+			userResource.mkdir();
+		}
+		
+		File pics = new File("userImg/"+userForm.getUsername().charAt(0)+ "/" + userForm.getUsername() + "/pic");
+		pics.mkdir();
+		File vids = new File("userImg/"+userForm.getUsername().charAt(0)+ "/" + userForm.getUsername() + "/vids");
+		vids.mkdir();
+		File other = new File("userImg/"+userForm.getUsername().charAt(0)+ "/" + userForm.getUsername() + "/other");
+		other.mkdir();
+		
 		return "redirect:/SocialMediaDemo/out";
 	}
 
@@ -127,24 +146,24 @@ public class UserController {
 
 	}
 
-	@GetMapping("/out/{photoName}")
-	public String displayPost(Model model, @PathVariable("photoName") String photoName,
+	@GetMapping("/out/{userImg}/{upDir}/{mainDir}/{pic}/{name}")
+	public String displayPost(Model model,  @PathVariable("userImg") String userImg, @PathVariable("upDir") String upDir, @PathVariable("mainDir") String mainDir,  @PathVariable("pic") String pic, @PathVariable("name") String name,
 			MulitComparator MulitComparator) {
-
-		return MainServicePerformerImpl.performPostView(PictureRepository, model, photoName, MulitComparator);
+		
+		return MainServicePerformerImpl.performPostView(PictureRepository, model, userImg, upDir,mainDir,pic,name, MulitComparator);
 	}
 
-	@GetMapping("/out/display/{photoName}")
-	public String displayPhoto(Model model, @PathVariable("photoName") String photoName) {
+	@GetMapping("/out/display/{userImg}/{upDir}/{mainDir}/{pic}/{name}")
+	public String displayPhoto(Model model, @PathVariable("userImg") String userImg, @PathVariable("upDir") String upDir, @PathVariable("mainDir") String mainDir,  @PathVariable("pic") String pic, @PathVariable("name") String name) {
 
-		return MainServicePerformerImpl.performPhotoView(model, photoName);
+		return MainServicePerformerImpl.performPhotoView(PictureRepository, model, userImg, upDir,mainDir,pic,name);
 	}
 
-	@GetMapping("/out/videos/{videoName}")
-	public String displayVideo(Model model, @PathVariable("videoName") String videoName,
+	@GetMapping("/out/videos/{userImg}/{upDir}/{mainDir}/{vids}/{name}")
+	public String displayVideo(Model model, @PathVariable("userImg") String userImg, @PathVariable("upDir") String upDir, @PathVariable("mainDir") String mainDir, @PathVariable("vids") String vids, @PathVariable("name") String name,
 			MulitComparator MulitComparator) {
 
-		return MainServicePerformerImpl.performVideoView(PictureRepository, model, videoName, MulitComparator);
+		return MainServicePerformerImpl.performVideoView(PictureRepository, model, userImg, upDir, mainDir, vids, name, MulitComparator);
 	}
 
 	@GetMapping("/logout")

@@ -16,7 +16,7 @@
 		<div id="container2" align="center">
 
                     <a href="/SocialMediaDemo/out/display/${photo.orginalPicPath}">
-			<img id="disp" alt="xx" src="/userImg/${photo.orginalPicPath}">
+			<img id="disp" alt="xx" src="/${photo.orginalPicPath}">
                     </a>   
                         
                          <div id="comments">
@@ -33,7 +33,7 @@
                                 <div id="post">
                                     <div id="who" align="center">
                                             <a href="#">
-                                                <img id="disp" alt="xx" src="/userImg/${com.comentator.profilePicture}">
+                                                <img id="disp" alt="xx" src="/${com.comentator.profilePicture}">
                                             </a>  
                                         <label>${com.comentator.username}</label>
                                     </div>

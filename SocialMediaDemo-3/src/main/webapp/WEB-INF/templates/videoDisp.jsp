@@ -17,7 +17,7 @@
 
                     
                         <video id = "video" preload = "metadata" class="videos" controls="true" >
-                            <source src="/userImg/${video.orginalPicPath}" type = "video/mp4" />
+                            <source src="/${video.orginalPicPath}" type = "video/mp4" />
                         </video>
                                                
                         <div id="comments">
@@ -34,7 +34,7 @@
                                 <div id="post">
                                     <div id="who" align="center">
                                             <a href="#">
-                                                <img id="disp" alt="xx" src="/userImg/${com.comentator.profilePicture}">
+                                                <img id="disp" alt="xx" src="/${com.comentator.profilePicture}">
                                             </a>  
                                         <label>${com.comentator.username}</label>
                                     </div>
