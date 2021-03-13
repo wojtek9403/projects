@@ -1,25 +1,19 @@
 package mainPackage;
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-
 import javax.servlet.http.HttpSession;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Import;
 import org.springframework.security.access.annotation.Secured;
-import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import buisnessLogic.MainServicePerformer;
+import buisnessLogic.MainServicePerformerImpl;
 import buisnessLogic.MulitComparator;
+import dbModelsnDAOs.FriendsRepository;
+import dbModelsnDAOs.NotifyRepository;
 import dbModelsnDAOs.PictureRepository;
 import dbModelsnDAOs.User;
 import dbModelsnDAOs.UserRepository;
@@ -33,15 +27,14 @@ public class AdminPanellController {
 
 	private PictureRepository PictureRepository;
 
-	private MainServicePerformer MainServicePerformerImpl;
+	private MainServicePerformerImpl MainServicePerformerImpl;
 
 	public AdminPanellController(dbModelsnDAOs.UserRepository userRepository,
-			dbModelsnDAOs.PictureRepository pictureRepository,
-			buisnessLogic.MainServicePerformer mainServicePerformerImpl) {
+			dbModelsnDAOs.PictureRepository pictureRepository, NotifyRepository NotifyRepository, FriendsRepository FriendsRepository) {
 		super();
 		UserRepository = userRepository;
 		PictureRepository = pictureRepository;
-		MainServicePerformerImpl = mainServicePerformerImpl;
+		this.MainServicePerformerImpl = new MainServicePerformerImpl(NotifyRepository,FriendsRepository);
 	}
 
 	@Secured("ROLE_ADMIN")

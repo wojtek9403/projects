@@ -38,8 +38,8 @@ import dbModelsnDAOs.User;
 import dbModelsnDAOs.UserRepository;
 import net.coobird.thumbnailator.Thumbnails;
 
-@Service
-public class MainServicePerformerImpl implements MainServicePerformer {
+
+public class MainServicePerformerImpl {
 
 	private NotifyRepository NotifyRepository;
 	private FriendsRepository FriendsRepository;
@@ -51,7 +51,6 @@ public class MainServicePerformerImpl implements MainServicePerformer {
 		this.FriendsRepository = FriendsRepository;
 	}
 
-	@Override
 	public String performProfileView(UserRepository UserRepository, Model model,
 			HttpSession session, MulitComparator MulitComparator) {
 
@@ -95,7 +94,6 @@ public class MainServicePerformerImpl implements MainServicePerformer {
 	}
 
 	@Secured("ROLE_ADMIN")
-	@Override
 	public String performAdminView(UserRepository UserRepository, Model model, HttpSession session,
 			MulitComparator MulitComparator) {
 
@@ -127,7 +125,6 @@ public class MainServicePerformerImpl implements MainServicePerformer {
 		return "AdminView";
 	}
 
-	@Override
 	public String performPhotoView(PictureRepository PictureRepository, Model model, String userImg, String upDir, String mainDir, String pic, String name) {
 
 		String path = userImg +"/"+ upDir +"/"+ mainDir +"/"+ pic +"/"+ name;
@@ -137,7 +134,7 @@ public class MainServicePerformerImpl implements MainServicePerformer {
 		return "display";
 	}
 
-	@Override
+	
 	public String performPostView(PictureRepository PictureRepository, Model model, String userImg, String upDir, String mainDir, String pic, String name,
 			MulitComparator MulitComparator) {		
 		
@@ -156,7 +153,7 @@ public class MainServicePerformerImpl implements MainServicePerformer {
 
 	// needs to be updated !
 	// needs to delete friends, comments etc.
-	@Override
+	
 	public String delete(UserRepository UserRepository, PictureRepository PictureRepository, String zgoda,
 			HttpSession session, Model model) {
 
@@ -217,7 +214,7 @@ public class MainServicePerformerImpl implements MainServicePerformer {
 
 	}
 
-	@Override
+	
 	public String photoUploader(UserRepository userRepository, PictureRepository PictureRepository, MultipartFile file,
 			String desc, HttpSession session, Model model) {
 
@@ -291,7 +288,7 @@ public class MainServicePerformerImpl implements MainServicePerformer {
 
 	}
 
-	@Override
+	
 	public String profilePicUploader(UserRepository userRepository, MultipartFile file, HttpSession session,
 			Model model) {
 
@@ -342,7 +339,7 @@ public class MainServicePerformerImpl implements MainServicePerformer {
 	// needs to be updated !
 	// needs to delete friends, comments etc.
 	@Secured("ROLE_ADMIN")
-	@Override
+	
 	public String deleteChosenUser(PictureRepository PictureRepository, UserRepository UserRepository,
 			String userNameToRemove, HttpSession session, Model model) {
 
@@ -394,7 +391,7 @@ public class MainServicePerformerImpl implements MainServicePerformer {
 	}
 // }	
 
-	@Override
+	
 	public String videoUploader(UserRepository userRepository, PictureRepository PictureRepository, MultipartFile file,
 			String desc, HttpSession session, Model model) {
 
@@ -484,7 +481,7 @@ public class MainServicePerformerImpl implements MainServicePerformer {
 
 	}
 
-	@Override
+	
 	public String performVideoView(PictureRepository PictureRepository, Model model, String userImg, String upDir, String mainDir, String vids, String name,
 			MulitComparator MulitComparator) {
 

@@ -21,10 +21,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
 
-import buisnessLogic.MainServicePerformer;
+import buisnessLogic.MainServicePerformerImpl;
 import buisnessLogic.MulitComparator;
 import buisnessLogic.RegistrationValidator;
 import dbModelsnDAOs.CommentsRepository;
+import dbModelsnDAOs.FriendsRepository;
+import dbModelsnDAOs.NotifyRepository;
 import dbModelsnDAOs.PictureRepository;
 import dbModelsnDAOs.User;
 import dbModelsnDAOs.UserRepository;
@@ -50,23 +52,25 @@ public class UserController {
 
 	private RegistrationValidator RegistrationValidator;
 
-	private MainServicePerformer MainServicePerformerImpl;
+	private MainServicePerformerImpl MainServicePerformerImpl;
 
 	private CommentsRepository CommentsRepository;
 
 	public UserController(UserService userService, SecurityService securityService,
 			dbModelsnDAOs.UserRepository userRepository, dbModelsnDAOs.PictureRepository pictureRepository,
-			buisnessLogic.RegistrationValidator registrationValidator, MainServicePerformer mainServicePerformerImpl,
+			buisnessLogic.RegistrationValidator registrationValidator,
 			dbModelsnDAOs.CommentsRepository CommentsRepository,
 			EmailSender emailSenderImpl,
-			TemplateEngine templateEngine) {
+			TemplateEngine templateEngine,NotifyRepository NotifyRepository,
+			FriendsRepository FriendsRepository
+			) {
 		super();
 		this.userService = userService;
 		this.securityService = securityService;
 		UserRepository = userRepository;
 		PictureRepository = pictureRepository;
 		RegistrationValidator = registrationValidator;
-		MainServicePerformerImpl = mainServicePerformerImpl;
+		this.MainServicePerformerImpl = new MainServicePerformerImpl(NotifyRepository, FriendsRepository);
 		this.CommentsRepository = CommentsRepository;
 		this.emailSenderImpl =  emailSenderImpl;
 		this.templateEngine = templateEngine;

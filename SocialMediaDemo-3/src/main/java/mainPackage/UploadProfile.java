@@ -1,15 +1,9 @@
 package mainPackage;
 
-import java.awt.image.BufferedImage;
-import java.io.ByteArrayInputStream;
-import java.io.File;
 import java.io.IOException;
-import java.util.UUID;
 
-import javax.imageio.ImageIO;
 import javax.servlet.http.HttpSession;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Import;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,22 +13,24 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
-import buisnessLogic.MainServicePerformer;
+import buisnessLogic.MainServicePerformerImpl;
+import dbModelsnDAOs.FriendsRepository;
+import dbModelsnDAOs.NotifyRepository;
 import dbModelsnDAOs.User;
 import dbModelsnDAOs.UserRepository;
-import net.coobird.thumbnailator.Thumbnails;
 
 @Import({ buisnessLogic.MainServicePerformerImpl.class })
 @Controller
 public class UploadProfile {
 
-	private MainServicePerformer MainServicePerformerImpl;
+	private MainServicePerformerImpl MainServicePerformerImpl;
 
 	private UserRepository userRepository;
 
-	public UploadProfile(MainServicePerformer mainServicePerformerImpl, UserRepository userRepository) {
+	public UploadProfile(UserRepository userRepository, NotifyRepository NotifyRepository,
+			FriendsRepository FriendsRepository) {
 		super();
-		MainServicePerformerImpl = mainServicePerformerImpl;
+		this.MainServicePerformerImpl = new MainServicePerformerImpl(NotifyRepository, FriendsRepository);
 		this.userRepository = userRepository;
 	}
 
