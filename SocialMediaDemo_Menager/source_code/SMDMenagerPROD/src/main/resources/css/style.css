@@ -1,0 +1,43 @@
+.root{
+
+}
+
+#mainButton{
+	-fx-background-color:blue;
+	-fx-position:relative;
+	-fx-padding: 10px;
+	-fx-top:100px;
+	-fx-margin-top: 100px;
+	-fx-alignment: center;
+	
+}
+#mainButton:hover{
+	-fx-background-color:red;
+}
+
+#loader{
+	-fx-opacity: 0.4;
+}
+
+
+#stackPane{
+	-fx-background-image: url("/images/welcome.jpg");
+	-fx-background-size: cover;
+}
+
+#scrollPane{
+
+}
+
+#Cancel:hover{	
+	-fx-background-color:red;
+}
+
+#loginButton:hover{
+	-fx-background-color:#2ee300;
+}
+
+.mainB{
+	-fx-background-color:"red";
+}
+
