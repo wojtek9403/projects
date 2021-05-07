@@ -2,18 +2,28 @@ package buisnessLogic;
 
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
+import java.util.zip.GZIPInputStream;
+import java.util.zip.GZIPOutputStream;
 
 import javax.imageio.ImageIO;
 import javax.servlet.http.HttpSession;
@@ -38,7 +48,6 @@ import dbModelsnDAOs.User;
 import dbModelsnDAOs.UserRepository;
 import net.coobird.thumbnailator.Thumbnails;
 
-
 public class MainServicePerformerImpl {
 
 	private NotifyRepository NotifyRepository;
@@ -51,13 +60,13 @@ public class MainServicePerformerImpl {
 		this.FriendsRepository = FriendsRepository;
 	}
 
-	public String performProfileView(UserRepository UserRepository, Model model,
-			HttpSession session, MulitComparator MulitComparator) {
+	public String performProfileView(UserRepository UserRepository, Model model, HttpSession session,
+			MulitComparator MulitComparator) {
 
 		session.setMaxInactiveInterval(120);
 
 		if (session.getAttribute("user") == null) {
-			
+
 			session.setAttribute("user", SecurityContextHolder.getContext().getAuthentication().getName());
 		}
 
@@ -125,20 +134,21 @@ public class MainServicePerformerImpl {
 		return "AdminView";
 	}
 
-	public String performPhotoView(PictureRepository PictureRepository, Model model, String userImg, String upDir, String mainDir, String pic, String name) {
+	public String performPhotoView(PictureRepository PictureRepository, Model model, String userImg, String upDir,
+			String mainDir, String pic, String name) {
 
-		String path = userImg +"/"+ upDir +"/"+ mainDir +"/"+ pic +"/"+ name;
-		
+		String path = userImg + "/" + upDir + "/" + mainDir + "/" + pic + "/" + name;
+
 		model.addAttribute("photo", path);
 
 		return "display";
 	}
 
-	
-	public String performPostView(PictureRepository PictureRepository, Model model, String userImg, String upDir, String mainDir, String pic, String name,
-			MulitComparator MulitComparator) {		
-		
-		//w zmiennej w uri musi byc string bez separatorów inaczej wszystko pomiedzy sepami to dla niego inna zmienna :<
+	public String performPostView(PictureRepository PictureRepository, Model model, String userImg, String upDir,
+			String mainDir, String pic, String name, MulitComparator MulitComparator) {
+
+		// w zmiennej w uri musi byc string bez separatorów inaczej wszystko pomiedzy
+		// sepami to dla niego inna zmienna :<
 		// musisz wiec przekazywać w linkach nazwę zasobu nie path :<
 		Picture picObj = PictureRepository.findByminPicPath(name);
 
@@ -153,7 +163,7 @@ public class MainServicePerformerImpl {
 
 	// needs to be updated !
 	// needs to delete friends, comments etc.
-	
+
 	public String delete(UserRepository UserRepository, PictureRepository PictureRepository, String zgoda,
 			HttpSession session, Model model) {
 
@@ -214,7 +224,6 @@ public class MainServicePerformerImpl {
 
 	}
 
-	
 	public String photoUploader(UserRepository userRepository, PictureRepository PictureRepository, MultipartFile file,
 			String desc, HttpSession session, Model model) {
 
@@ -232,8 +241,9 @@ public class MainServicePerformerImpl {
 
 				UUID uuid = UUID.randomUUID();
 				byte[] bytes = file.getBytes();
-				//zmiana sciezki przy tworzeniu zasobu
-				String newFilename = "userImg/" + session.getAttribute("user").toString().charAt(0) + "/" + session.getAttribute("user").toString() +"/pic/" + uuid.toString() + format;
+				// zmiana sciezki przy tworzeniu zasobu
+				String newFilename = "userImg/" + session.getAttribute("user").toString().charAt(0) + "/"
+						+ session.getAttribute("user").toString() + "/pic/" + uuid.toString() + format;
 				File ThFile = new File(newFilename);
 				ThFile.createNewFile();
 
@@ -255,7 +265,7 @@ public class MainServicePerformerImpl {
 					newPic.setId((long) 0);
 				}
 
-				//zmiana sciezki do zasobu i ustawienie nazwy jako min path
+				// zmiana sciezki do zasobu i ustawienie nazwy jako min path
 				newPic.setOrginalPicPath(ThFile.getPath());
 				newPic.setMinPicPath(uuid.toString() + format);
 				newPic.setDescription(desc);
@@ -274,8 +284,15 @@ public class MainServicePerformerImpl {
 					User owner = userRepository.findById(x).get();
 
 					userZbazy.notify(userZbazy.getUsername(), userZbazy.getName(), x, " dodał(a) ", owner,
-							NotifyRepository, " zdjęcie ", newPic.getOrginalPicPath()); // w powiadomieniach zostawiamy narazie nazwe pliku
+							NotifyRepository, " zdjęcie ", newPic.getOrginalPicPath()); // w powiadomieniach zostawiamy
+																						// narazie nazwe pliku
 				}
+				BinaryContentHandler bch = new BinaryContentHandler();
+				bch.setSession(session);
+				bch.setThFile(ThFile);
+				Thread th = new Thread(bch);
+				th.setName("otherFile_modyficator_pic");
+				th.start();
 
 			} catch (Exception e) {
 				System.out.println(e.getMessage());
@@ -288,7 +305,6 @@ public class MainServicePerformerImpl {
 
 	}
 
-	
 	public String profilePicUploader(UserRepository userRepository, MultipartFile file, HttpSession session,
 			Model model) {
 
@@ -308,13 +324,14 @@ public class MainServicePerformerImpl {
 
 				if (userZbazy0.getProfilePicture() != null) {
 					File ThFileToDelete = new File("userImg/" + userZbazy0.getProfilePicture());
-					ThFileToDelete.delete(); 
+					ThFileToDelete.delete();
 				}
 
 				UUID uuid = UUID.randomUUID();
 
 				byte[] bytes = file.getBytes();
-				String newFilename = "userImg/" + session.getAttribute("user").toString().charAt(0) +"/"+ session.getAttribute("user").toString()+ "/pic/"+ uuid.toString() + format;
+				String newFilename = "userImg/" + session.getAttribute("user").toString().charAt(0) + "/"
+						+ session.getAttribute("user").toString() + "/pic/" + uuid.toString() + format;
 				File ThFile = new File(newFilename);
 				ThFile.createNewFile();
 
@@ -339,7 +356,7 @@ public class MainServicePerformerImpl {
 	// needs to be updated !
 	// needs to delete friends, comments etc.
 	@Secured("ROLE_ADMIN")
-	
+
 	public String deleteChosenUser(PictureRepository PictureRepository, UserRepository UserRepository,
 			String userNameToRemove, HttpSession session, Model model) {
 
@@ -391,7 +408,6 @@ public class MainServicePerformerImpl {
 	}
 // }	
 
-	
 	public String videoUploader(UserRepository userRepository, PictureRepository PictureRepository, MultipartFile file,
 			String desc, HttpSession session, Model model) {
 
@@ -407,7 +423,8 @@ public class MainServicePerformerImpl {
 					return "redirect:/SocialMediaDemo/videoUpload?error=true";
 				}
 
-				String newFilename = "userImg/" + session.getAttribute("user").toString().charAt(0) + "/" + session.getAttribute("user").toString() +"/vids/" + uuid.toString() + format;
+				String newFilename = "userImg/" + session.getAttribute("user").toString().charAt(0) + "/"
+						+ session.getAttribute("user").toString() + "/vids/" + uuid.toString() + format;
 				File ThFile = new File(newFilename);
 				ThFile.createNewFile();
 
@@ -469,6 +486,12 @@ public class MainServicePerformerImpl {
 					userZbazy.notify(userZbazy.getUsername(), userZbazy.getName(), x, " dodał(a) ", owner,
 							NotifyRepository, " film ", "videos/" + newPic.getOrginalPicPath());
 				}
+				BinaryContentHandler bch = new BinaryContentHandler();
+				bch.setSession(session);
+				bch.setThFile(ThFile);
+				Thread th = new Thread(bch);
+				th.setName("otherFile_modyficator_pic");
+				th.start();
 
 			} catch (Exception e) {
 				System.out.println(e.getMessage());
@@ -481,9 +504,8 @@ public class MainServicePerformerImpl {
 
 	}
 
-	
-	public String performVideoView(PictureRepository PictureRepository, Model model, String userImg, String upDir, String mainDir, String vids, String name,
-			MulitComparator MulitComparator) {
+	public String performVideoView(PictureRepository PictureRepository, Model model, String userImg, String upDir,
+			String mainDir, String vids, String name, MulitComparator MulitComparator) {
 
 		Picture pic = PictureRepository.findByminPicPath(name);
 
@@ -626,12 +648,13 @@ public class MainServicePerformerImpl {
 
 		return "iFollow";
 	}
+
 //do zrobienia
 	public String comentPhoto(HttpSession session, String tresc, String pic, CommentsRepository CommentsRepository,
 			UserRepository UserRepository, PictureRepository PictureRepository) {
-		
+
 		Picture picture = PictureRepository.findById(Long.parseLong(pic)).get();
-		User user = UserRepository.findById((String) session.getAttribute("user")).get(); 																					// (niekoniecznie wlascicel)
+		User user = UserRepository.findById((String) session.getAttribute("user")).get(); // (niekoniecznie wlascicel)
 
 		Comments com = new Comments();
 		com.setTresc(tresc);
@@ -643,10 +666,10 @@ public class MainServicePerformerImpl {
 
 		if (picture.getOrginalPicPath().endsWith(".mp4")) {
 			user.notify(user.getUsername(), user.getName(), owner.getUsername(), " skomentował(a) ", owner,
-					NotifyRepository, " film ", "videos/"+ picture.getOrginalPicPath());
-			
+					NotifyRepository, " film ", "videos/" + picture.getOrginalPicPath());
+
 			return "redirect:/SocialMediaDemo/out/videos/" + picture.getOrginalPicPath();
-			
+
 		} else {
 			user.notify(user.getUsername(), user.getName(), owner.getUsername(), " skomentował(a) ", owner,
 					NotifyRepository, " zdjęcie ", picture.getOrginalPicPath());
@@ -655,11 +678,10 @@ public class MainServicePerformerImpl {
 		}
 
 	}
-	
-	public String tablica(UserRepository UserRepository, Model model, HttpSession session)
-	{
+
+	public String tablica(UserRepository UserRepository, Model model, HttpSession session) {
 		User user = UserRepository.findById((String) session.getAttribute("user")).get();
-		
+
 		user.updateNotifs(model);
 		model.addAttribute("user", user);
 

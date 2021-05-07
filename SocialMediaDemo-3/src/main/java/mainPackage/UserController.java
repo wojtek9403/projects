@@ -137,14 +137,16 @@ public class UserController {
 		if (error != null) {
 			model.addAttribute("error", "błędny login lub hasło");
 		}
-
 		return "login";
 	}
 
 	@Cacheable("welcome")
 	@GetMapping({ "/", "/out" })
 	public String welcome1(Model model, HttpSession session, MulitComparator MulitComparator) {
-
+		System.out.println("jestem");
+		
+		
+		
 		return MainServicePerformerImpl.performProfileView(UserRepository, model, session,
 				MulitComparator);
 

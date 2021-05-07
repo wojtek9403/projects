@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import buisnessLogic.BinaryContentHandler;
 import buisnessLogic.MainServicePerformerImpl;
 import dbModelsnDAOs.FriendsRepository;
 import dbModelsnDAOs.NotifyRepository;
@@ -30,9 +31,8 @@ public class UploadVideo {
 
 	private UserRepository UserRepository;
 
-	public UploadVideo(dbModelsnDAOs.PictureRepository pictureRepository,
-			dbModelsnDAOs.UserRepository userRepository, NotifyRepository NotifyRepository,
-			FriendsRepository FriendsRepository) {
+	public UploadVideo(dbModelsnDAOs.PictureRepository pictureRepository, dbModelsnDAOs.UserRepository userRepository,
+			NotifyRepository NotifyRepository, FriendsRepository FriendsRepository) {
 		super();
 		this.MainServicePerformerImpl = new MainServicePerformerImpl(NotifyRepository, FriendsRepository);
 		PictureRepository = pictureRepository;
@@ -56,8 +56,7 @@ public class UploadVideo {
 
 	@PostMapping("/videoUpload")
 	@Transactional
-	public String FileUpload(@RequestParam("file") MultipartFile file, String desc, HttpSession session, Model model)
-			throws IllegalStateException, IOException {
+	public String FileUpload(@RequestParam("file") MultipartFile file, String desc, HttpSession session, Model model) throws IllegalStateException, IOException {
 		return MainServicePerformerImpl.videoUploader(UserRepository, PictureRepository, file, desc, session, model);
 
 	}

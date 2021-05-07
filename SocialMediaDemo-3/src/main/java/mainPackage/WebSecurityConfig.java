@@ -42,7 +42,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				.anyRequest().authenticated()
 				.and().formLogin().loginPage("/SocialMediaDemo/login")
 				.defaultSuccessUrl("/SocialMediaDemo/out").permitAll().and().logout()
-				.logoutUrl("/SocialMediaDemo/logout").logoutSuccessUrl("/").permitAll();
+				.logoutUrl("/SocialMediaDemo/logout").logoutSuccessUrl("/").permitAll()
+				.and().httpBasic(); // odniesienie sie do httpBasic umozliwia apce desktopowej wykonanie zapytania - wylacza dla niej token
 			    
 	}
 
